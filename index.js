@@ -421,6 +421,7 @@ generateColorButtons();
 
 this.addEventListener("DOMContentLoaded", preloadImages, true);
 function preloadImages(e) {
+    console.log("yeah")
     // let imageArray = new Array("path/image.png", "path/image2.png", "path/image3.png");
     allIngredients.forEach((ingredientId, ingredient) => {
         imagePath = getImagePath(ingredient);
