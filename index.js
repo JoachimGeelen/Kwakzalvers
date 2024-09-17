@@ -246,7 +246,7 @@ function pickIngredient() {
     if (ingredientId === -1) return;
     player.placeIngredientOnBoard(ingredientId)
     // const ingredientId = player.playSingleAction()
-    alert(ingredientIdToText(ingredientId));
+    // alert(ingredientIdToText(ingredientId));
     // const pickedId = player.pick();
     // alert(ingredientIdToText(pickedId));
 
@@ -373,6 +373,10 @@ function getImage(ingredientId) {
     return img;
 }
 
+function getImagePath(ingredient) {
+    return `images/tokens/128x128/${ColorById.get(ingredient.color)}-${ingredient.value}.png`;
+}
+
 
 function startingPosition() {
     // player.purchase(1, 4);
@@ -388,6 +392,9 @@ function startingPosition() {
 
 const player = new Player();
 const allIngredients = createAllIngredients();
+
+
+
 
 // UI STUFF
 // Get references to the divs
@@ -412,7 +419,15 @@ viewStoreLink.addEventListener('click', function(event) {
 });
 generateColorButtons();
 
-
+this.addEventListener("DOMContentLoaded", preloadImages, true);
+function preloadImages(e) {
+    // let imageArray = new Array("path/image.png", "path/image2.png", "path/image3.png");
+    allIngredients.forEach((ingredientId, ingredient) => {
+        imagePath = getImagePath(ingredient);
+        let tempImage = new Image();
+        tempImage.src = imagePath;
+    })
+}
 
 
 
