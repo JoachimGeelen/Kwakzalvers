@@ -70,7 +70,11 @@ class Player {
             this.inventory[id] = 0;
         }
         this.inventory[id] += quantity;
-        this.resetBag();
+        if (!this.bag[id]) {
+            this.bag[id] = 0;
+        }
+        this.bag[id] += quantity;
+        // this.resetBag();
     }
 
     sell(id) {
@@ -93,7 +97,18 @@ class Player {
         this.bag = { ...this.inventory };  // Reset bag to match owned ingredients
     }
 
+    isEmpty(ingredientList) {
+        let empty = true;
+        Object.values(ingredientList).forEach(ingredientCount => {
+            if (ingredientCount > 0) {
+                empty = false;
+            }
+        });
+        return empty;
+    }
+
     drawRandomIngredientId(bag) {
+        if (this.isEmpty(bag)) return -1;
         const rawIngredientList = []
         Object.keys(bag).forEach(id => {
             const count = bag[id];
@@ -112,6 +127,7 @@ class Player {
         const selectedIngredientIds = [];
         for (let i=0; i<count; i++) {
             const ingredientId = this.drawRandomIngredientId(tempBag);
+            if (ingredientId === -1) return;
             selectedIngredientIds.push(ingredientId);
         }
         return selectedIngredientIds;
@@ -125,11 +141,11 @@ class Player {
         this.board.push(ingredientId);
     }
 
-    playSingleAction() {
-        const randomIngredientId = this.drawRandomIngredientId(this.bag);
-        this.placeIngredientOnBoard(randomIngredientId);
-        return randomIngredientId;
-    }
+    // playSingleAction() {
+    //     const randomIngredientId = this.drawRandomIngredientId(this.bag);
+    //     this.placeIngredientOnBoard(randomIngredientId);
+    //     return randomIngredientId;
+    // }
     removeFromBoard(boardId) {
         if (this.board.length === 0) return;
         if (boardId < 0) throw new Error("bad board ID");
@@ -226,17 +242,14 @@ function sellIngredient(ingredientId) {
 
 // Function to pick a random ingredient
 function pickIngredient() {
-    try {
-        const ingredientId = player.drawRandomIngredientId(player.bag);
-        player.placeIngredientOnBoard(ingredientId)
-        // const ingredientId = player.playSingleAction()
-        alert(ingredientIdToText(ingredientId));
-        // const pickedId = player.pick();
-        // alert(ingredientIdToText(pickedId));
+    const ingredientId = player.drawRandomIngredientId(player.bag);
+    if (ingredientId === -1) return;
+    player.placeIngredientOnBoard(ingredientId)
+    // const ingredientId = player.playSingleAction()
+    alert(ingredientIdToText(ingredientId));
+    // const pickedId = player.pick();
+    // alert(ingredientIdToText(pickedId));
 
-    } catch (e) {
-        alert(e.message);
-    }
     updateUI();
 }
 
@@ -257,12 +270,12 @@ function mydrawMultipleIngredients() {
         alert("Invalid choice");
         return;
     }
-    console.log(count)
     if (count === 0) return;
 
     const randomIngredientIds = player.drawMultipleRandomIngredientIds(count);
+    if (!randomIngredientIds) return; // bag was empty
     const selectedIngredientId = promptUserToSelectIngredientId(randomIngredientIds);
-    if (!selectedIngredientId) return;
+    if (!selectedIngredientId) return; // no ingredient selected
     player.removeIngredientFromBag(player.bag, selectedIngredientId);
     player.placeIngredientOnBoard(selectedIngredientId);
 
@@ -362,11 +375,12 @@ function getImage(ingredientId) {
 
 
 function startingPosition() {
-    player.purchase(1, 4)
-    player.purchase(2, 2)
-    player.purchase(3, 1)
-    player.purchase(11)
-    player.purchase(51)
+    // player.purchase(1, 4);
+    player.purchase(2, 2);
+    player.purchase(3, 1);
+    player.purchase(11);
+    player.purchase(51);
+    player.resetBag();
 }
 
 
