@@ -448,6 +448,7 @@ generateColorButtons();
 preloadImages();
 function preloadImages() {
     // let imageArray = new Array("path/image.png", "path/image2.png", "path/image3.png");
+    
     imageArray = [];
     allIngredients.forEach((ingredientId, ingredient) => {
         const imagePath = getImagePath(ingredient);
