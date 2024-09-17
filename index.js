@@ -393,7 +393,6 @@ function buildIngredientDiv(ingredientId) {
 function getImage(ingredientId) {
     const img = document.createElement("img");
     const ingredient = allIngredients.get(parseInt(ingredientId));
-    console.log(ingredient)
     img.src = getImagePath(ingredient);
     return img;
 }
@@ -443,20 +442,6 @@ viewStoreLink.addEventListener('click', function(event) {
     storeDiv.style.display = 'block';
 });
 generateColorButtons();
-
-// this.addEventListener("DOMContentLoaded", preloadImages, true);
-preloadImages();
-function preloadImages() {
-    // let imageArray = new Array("path/image.png", "path/image2.png", "path/image3.png");
-    
-    imageArray = [];
-    allIngredients.forEach((ingredientId, ingredient) => {
-        const imagePath = getImagePath(ingredient);
-        const tempImage = new Image();
-        tempImage.src = imagePath;
-        imageArray.push(tempImage);
-    });
-}
 
 
 
