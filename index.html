@@ -23,21 +23,18 @@
     <nav class="mobile-nav">
         <a id="view-cauldron" class="nav-block">Cauldron</a>
         <a id="view-store" class="nav-block">Store</a>
-        <!-- <div class="nav-block">1</div>
-        <div class="nav-block">2</div> -->
     </nav>
-
 
     <div id="Cauldron">
         <div id="Bag">
         <h3 class="is-size-3">Bag</h3>
-        <div>
+        <div class="draw-buttons-list">
             <!-- Button to pick a random ingredient -->
-            <button onclick="pickIngredient()">Pick Random Ingredient</button>
+            <button onclick="pickIngredient()" class="draw-button">Pick Random Ingredient</button>
             
             <!-- <button onclick="drawMultipleIngredients(4)">Draw 4 Ingredients</button> -->
-            <button onclick="mydrawMultipleIngredients()">Draw Multiple</button>
-            <button onclick="undoLastSelect()">Undo</button>
+            <button onclick="mydrawMultipleIngredients()" class="draw-button">Draw Multiple</button>
+            <button onclick="undoLastSelect()" class="draw-button">Undo</button>
         </div>
         <div id="bag-ingredients" class="ingredientList"></div>
     </div>
