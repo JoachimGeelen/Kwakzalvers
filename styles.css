@@ -61,15 +61,16 @@
     align-content: center;
     height: 3em;
     width: 3em;
+    cursor: pointer;
     /* margin: 0.05em; */
 }
 .ingredient img {
     height: 100%;
     width: auto;
 }
-.inventoryItem {
+/* .inventoryItem {
     cursor: pointer;
-}
+} */
 .colorButtonList {
     display: flex;
     flex-wrap: wrap;

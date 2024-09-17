@@ -122,6 +122,14 @@ class Player {
         return randomIngredientId;
     }
 
+    drawSpecificIngredient(ingredientId) {
+        if (this.isEmpty(this.bag)) return -1;
+        this.bag[ingredientId]--;
+        return ingredientId;
+        // this.bag[ingredientId]--;
+        // this.placeIngredientOnBoard(ingredientId);
+    }
+
     drawMultipleRandomIngredientIds(count) {
         const tempBag = structuredClone(this.bag);
         const selectedIngredientIds = [];
@@ -132,6 +140,8 @@ class Player {
         }
         return selectedIngredientIds;
     }
+
+
 
     removeIngredientFromBag(bag, ingredientId) {
         bag[ingredientId]--;
@@ -245,11 +255,13 @@ function pickIngredient() {
     const ingredientId = player.drawRandomIngredientId(player.bag);
     if (ingredientId === -1) return;
     player.placeIngredientOnBoard(ingredientId)
-    // const ingredientId = player.playSingleAction()
-    // alert(ingredientIdToText(ingredientId));
-    // const pickedId = player.pick();
-    // alert(ingredientIdToText(pickedId));
+    updateUI();
+}
 
+function pickSpecificIngredient(ingredientId) {
+    const pickedIngredientId = player.drawSpecificIngredient(ingredientId);
+    if (pickedIngredientId === -1) return;
+    player.placeIngredientOnBoard(pickedIngredientId);
     updateUI();
 }
 
@@ -326,27 +338,40 @@ function resetBag() {
 
 // Function to update the UI
 function updateUI() {
-    insertBoardIngredientList(); //same as below but different due to difference between board and bag/inventory
-    insertIngredientList(document.getElementById('bag-ingredients'), player.bag);
-    insertIngredientList(document.getElementById('owned-ingredients'), player.inventory);
+    insertBagIngredientList(document.getElementById('bag-ingredients'), player.bag);
+    insertBoardIngredientList(document.getElementById('board-ingredients'), player.board); //same as below but different due to difference between board and bag/inventory
+    insertInventoryIngredientList(document.getElementById('owned-ingredients'), player.inventory);
     
 }
-function insertBoardIngredientList() {
-    const boardDiv = document.getElementById('board-ingredients');
-    boardDiv.innerHTML = '';
-    player.board.forEach((ingredientId, boardId) => {
+
+
+function insertBagIngredientList(div, ingredientList) {
+    div.innerHTML = '';
+    Object.keys(ingredientList).forEach(ingredientId => {for (let i=0; i<ingredientList[ingredientId]; i++) {
+        const ingredientDiv = buildIngredientDiv(ingredientId);
+        ingredientDiv.addEventListener('click', function (event) {
+            pickSpecificIngredient(ingredientId);
+        });
+        div.append(ingredientDiv);
+    }});
+}
+function insertBoardIngredientList(div, board) {
+    div.innerHTML = '';
+    board.forEach((ingredientId, boardId) => {
         const ingredientDiv = buildIngredientDiv(ingredientId);
         ingredientDiv.addEventListener('click', function (event) {
             removeFromBoardWrapper(boardId);
         });
-        boardDiv.append(ingredientDiv);
+        div.append(ingredientDiv);
     });
 }
-
-function insertIngredientList(div, ingredientList) {
+function insertInventoryIngredientList(div, ingredientList) {
     div.innerHTML = '';
     Object.keys(ingredientList).forEach(ingredientId => {for (let i=0; i<ingredientList[ingredientId]; i++) {
         const ingredientDiv = buildIngredientDiv(ingredientId);
+        ingredientDiv.addEventListener('click', function (event) {
+            sellIngredient(ingredientId);
+        });
         div.append(ingredientDiv);
     }});
 }
