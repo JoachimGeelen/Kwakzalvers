@@ -217,7 +217,7 @@ function sellIngredient(ingredientId) {
         player.resetBag();
 
         if (navigator.vibrate) {
-            navigator.vibrate(50);  // Vibrate for 200ms
+            navigator.vibrate(300);  // Vibrate for 200ms
         }
         player.sell(ingredientId);  // Calls the remove method in the Player class
         updateUI();  // Update the UI after removal
@@ -306,7 +306,7 @@ function resetBag() {
         updateUI();  // Update the UI after resetting
 
         if (navigator.vibrate) {
-            navigator.vibrate(100);  // Vibrate for 200ms
+            navigator.vibrate(300);  // Vibrate for 200ms
         }
     }
 }
