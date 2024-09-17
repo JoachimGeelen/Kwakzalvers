@@ -393,8 +393,7 @@ function buildIngredientDiv(ingredientId) {
 function getImage(ingredientId) {
     const img = document.createElement("img");
     const ingredient = allIngredients.get(parseInt(ingredientId));
-    const imagePath = `images/tokens/128x128/${ColorById.get(ingredient.color)}-${ingredient.value}.png`;
-    img.src = imagePath;
+    img.src = getImagePath(ingredient);
     return img;
 }
 
@@ -444,15 +443,17 @@ viewStoreLink.addEventListener('click', function(event) {
 });
 generateColorButtons();
 
-this.addEventListener("DOMContentLoaded", preloadImages, true);
-function preloadImages(e) {
-    console.log("yeah")
+// this.addEventListener("DOMContentLoaded", preloadImages, true);
+preloadImages();
+function preloadImages() {
     // let imageArray = new Array("path/image.png", "path/image2.png", "path/image3.png");
+    imageArray = [];
     allIngredients.forEach((ingredientId, ingredient) => {
-        imagePath = getImagePath(ingredient);
-        let tempImage = new Image();
+        const imagePath = getImagePath(ingredient);
+        const tempImage = new Image();
         tempImage.src = imagePath;
-    })
+        imageArray.push(tempImage);
+    });
 }
 
 

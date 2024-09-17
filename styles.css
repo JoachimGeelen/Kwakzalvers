@@ -65,6 +65,7 @@
     /* margin: 0.05em; */
 }
 .ingredient img {
+    /* background: url('images/tokens/128x128/_border.png');  */
     height: 100%;
     width: auto;
 }
