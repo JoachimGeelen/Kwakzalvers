@@ -57,10 +57,11 @@
     align-content: flex-start;
 }
 .ingredient {
+    
     text-align: center;
     align-content: center;
-    height: 3em;
-    width: 3em;
+    height: 10em;
+    width: var(height);
     cursor: pointer;
     /* margin: 0.05em; */
 }
