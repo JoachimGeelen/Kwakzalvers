@@ -57,11 +57,10 @@
     align-content: flex-start;
 }
 .ingredient {
-    
     text-align: center;
     align-content: center;
-    height: 10em;
-    width: var(height);
+    height: 3em;
+    aspect-ratio: 1;
     cursor: pointer;
     /* margin: 0.05em; */
 }

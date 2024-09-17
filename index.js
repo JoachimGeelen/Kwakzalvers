@@ -341,7 +341,6 @@ function updateUI() {
     insertBagIngredientList(document.getElementById('bag-ingredients'), player.bag);
     insertBoardIngredientList(document.getElementById('board-ingredients'), player.board); //same as below but different due to difference between board and bag/inventory
     insertInventoryIngredientList(document.getElementById('owned-ingredients'), player.inventory);
-    
 }
 
 
@@ -403,7 +402,7 @@ function getImagePath(ingredient) {
 
 
 function startingPosition() {
-    // player.purchase(1, 4);
+    player.purchase(1, 4);
     player.purchase(2, 2);
     player.purchase(3, 1);
     player.purchase(11);
