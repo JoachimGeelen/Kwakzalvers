@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
 
 </head>
-<body style="margin:0; overflow-y: auto;">
+<body style="margin:0;">
     <!-- <h1 class="is-size-1 has-text-centered">Bag</h1> -->
     <header class="bar">
         <div>
@@ -24,43 +24,44 @@
         <a id="view-cauldron" class="nav-block">Cauldron</a>
         <a id="view-store" class="nav-block">Store</a>
     </nav>
-
-    <div id="Cauldron">
-        <div id="Bag">
-        <h3 class="is-size-3">Bag</h3>
-        <div class="draw-buttons-list">
-            <!-- Button to pick a random ingredient -->
-            <button onclick="pickIngredient()" class="draw-button">Pick Random Ingredient</button>
+    <div class="content">
+        <div id="Cauldron">
+            <div id="Bag">
+                <h3 class="is-size-3">Bag</h3>
+                <div class="draw-buttons-list">
+                    <!-- Button to pick a random ingredient -->
+                    <button onclick="pickIngredient()" class="draw-button">Pick Random Ingredient</button>
+                    
+                    <!-- <button onclick="drawMultipleIngredients(4)">Draw 4 Ingredients</button> -->
+                    <button onclick="mydrawMultipleIngredients()" class="draw-button">Draw Multiple</button>
+                    <!-- <button onclick="undoLastSelect()" class="draw-button">Undo</button> -->
+                </div>
+                <div id="bag-ingredients" class="ingredientList"></div>
+            </div>
             
-            <!-- <button onclick="drawMultipleIngredients(4)">Draw 4 Ingredients</button> -->
-            <button onclick="mydrawMultipleIngredients()" class="draw-button">Draw Multiple</button>
-            <!-- <button onclick="undoLastSelect()" class="draw-button">Undo</button> -->
-        </div>
-        <div id="bag-ingredients" class="ingredientList"></div>
-    </div>
-    
-    <div id="Board">
-        <h3 class="is-size-3">Board</h3>
-        <button onclick="resetBag()">Reset Bag</button>
-            <div id="board-ingredients" class="ingredientList inventoryItem"></div>
-        </div>
-    </div>
-
-
-    <div id="Store" style="display:none">
-        <div id="Buy">
-            <h3 class="is-size-3">Buy Ingredients</h3>
-            <div id="buy-buttons">
-                <div id="color-buttons" class="colorButtonList"></div>
-                <div id="value-buttons" class="colorButtonList"></div>
-
+            <div id="Board">
+                <h3 class="is-size-3">Board</h3>
+                <button onclick="resetBag()">Reset Bag</button>
+                <div id="board-ingredients" class="ingredientList inventoryItem"></div>
             </div>
         </div>
-
-        <div id="Owned">
-            <!-- Section to display owned ingredients and bag contents -->
-            <h3 class="is-size-3">Owned Ingredients</h3>
-            <div id="owned-ingredients" class="ingredientList"></div>
+    
+    
+        <div id="Store" style="display:none">
+            <div id="Buy">
+                <h3 class="is-size-3">Buy Ingredients</h3>
+                <div id="buy-buttons">
+                    <div id="color-buttons" class="colorButtonList"></div>
+                    <div id="value-buttons" class="colorButtonList"></div>
+                    
+                </div>
+            </div>
+            
+            <div id="Owned">
+                <!-- Section to display owned ingredients and bag contents -->
+                <h3 class="is-size-3">Owned Ingredients</h3>
+                <div id="owned-ingredients" class="ingredientList"></div>
+            </div>
         </div>
     </div>
 </body>

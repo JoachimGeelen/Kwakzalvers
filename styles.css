@@ -7,6 +7,7 @@
     --5-ingredient: #e58026;
     --6-ingredient: hsl(240, 10%, 55%);
     --7-ingredient: hsl(308, 32%, 55%);
+    --mobile-nav-height: 65px;
 }
 .white {background-color: var(--0-ingredient);}
 .green {background-color: var(--1-ingredient);}
@@ -21,11 +22,16 @@
     /* outline: 1px solid red */
     /* box-shadow:0 0 0 1px red; */
 /* } */
+.content {
+    overflow-y: auto;
+    padding-bottom: var(--mobile-nav-height);
+    /* margin-bottom:  */
+}
 .mobile-nav {
     background-color: darkslategrey;
     position: fixed;
     bottom: 0;
-    height: 65px;
+    height: var(--mobile-nav-height);
     width: 100%;
     display: flex;
     justify-content: space-around;
