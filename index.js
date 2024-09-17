@@ -393,6 +393,7 @@ function buildIngredientDiv(ingredientId) {
 function getImage(ingredientId) {
     const img = document.createElement("img");
     const ingredient = allIngredients.get(parseInt(ingredientId));
+    console.log(ingredient)
     img.src = getImagePath(ingredient);
     return img;
 }
