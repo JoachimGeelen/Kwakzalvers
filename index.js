@@ -60,24 +60,24 @@ function createAllIngredients() {
 
 class Player {
     constructor() {
-        this.ownedIngredients = {};  // Stores the total number of each ingredient owned
+        this.inventory = {};  // Stores the total number of each ingredient owned
         this.bag = {};  // Tracks current ingredients in the bag
         this.board = []; // Stores all picked ingredients
     }
 
     purchase(id, quantity = 1) {
-        if (!this.ownedIngredients[id]) {
-            this.ownedIngredients[id] = 0;
+        if (!this.inventory[id]) {
+            this.inventory[id] = 0;
         }
-        this.ownedIngredients[id] += quantity;
+        this.inventory[id] += quantity;
         this.resetBag();
     }
 
     sell(id) {
-        if (this.ownedIngredients[id] > 0) {
-            this.ownedIngredients[id] -= 1;
-            if (this.ownedIngredients[id] === 0) {
-                delete this.ownedIngredients[id];  // Remove key if count reaches 0
+        if (this.inventory[id] > 0) {
+            this.inventory[id] -= 1;
+            if (this.inventory[id] === 0) {
+                delete this.inventory[id];  // Remove key if count reaches 0
             }
             this.resetBag();
             return;
@@ -90,7 +90,7 @@ class Player {
     }
 
     resetBag() {
-        this.bag = { ...this.ownedIngredients };  // Reset bag to match owned ingredients
+        this.bag = { ...this.inventory };  // Reset bag to match owned ingredients
     }
 
     drawRandomIngredientId(bag) {
@@ -313,85 +313,51 @@ function resetBag() {
 
 // Function to update the UI
 function updateUI() {
-    updateBoardUI();
-    updateBagUI();
-    updateOwnedIngredientsUI();
+    insertBoardIngredientList(); //same as below but different due to difference between board and bag/inventory
+    insertIngredientList(document.getElementById('bag-ingredients'), player.bag);
+    insertIngredientList(document.getElementById('owned-ingredients'), player.inventory);
+    
 }
-function updateBoardUI() {
+function insertBoardIngredientList() {
     const boardDiv = document.getElementById('board-ingredients');
     boardDiv.innerHTML = '';
     player.board.forEach((ingredientId, boardId) => {
-        const div = document.createElement("div");
-        const ingredient = allIngredients.get(parseInt(ingredientId))
-        div.innerHTML = ingredient.value;
-        const color = ColorById.get(ingredient.color);
-        div.classList.add(color, "ingredient");
-        div.addEventListener('click', function (event) {
+        const ingredientDiv = buildIngredientDiv(ingredientId);
+        ingredientDiv.addEventListener('click', function (event) {
             removeFromBoardWrapper(boardId);
         });
-        boardDiv.append(div);
+        boardDiv.append(ingredientDiv);
     });
 }
-function updateBagUI(useStacks=false) {
-    const bagDiv = document.getElementById('bag-ingredients');
-    bagDiv.innerHTML = '';
-    if (useStacks) {
-        Object.keys(player.bag).forEach(ingredientId => {
-            count = player.bag[ingredientId];
-            if (count > 0) {
-                const div = document.createElement("div");
-                div.innerHTML = `x${count} ${ingredientIdToText(ingredientId)}`;
-                bagDiv.append(div);
-            }
-        });
-    } else {
-        Object.keys(player.bag).forEach(ingredientId => {
-            for (let i=0; i<player.bag[ingredientId]; i++) {
-                const div = document.createElement("div");
-                const ingredient = allIngredients.get(parseInt(ingredientId))
-                div.innerHTML = ingredient.value;
-                const color = ColorById.get(ingredient.color);
-                div.classList.add(color, "ingredient");
-                bagDiv.append(div);
-            }
-        })
-    }
+
+function insertIngredientList(div, ingredientList) {
+    div.innerHTML = '';
+    Object.keys(ingredientList).forEach(ingredientId => {for (let i=0; i<ingredientList[ingredientId]; i++) {
+        const ingredientDiv = buildIngredientDiv(ingredientId);
+        div.append(ingredientDiv);
+    }});
 }
-function updateOwnedIngredientsUI(useStacks=false) {
-    const ownedIngredientsDiv = document.getElementById('owned-ingredients');
-    ownedIngredientsDiv.innerHTML = '';
-    if (useStacks) {
-        Object.keys(player.ownedIngredients).forEach(ingredientId => {
-            count = player.ownedIngredients[ingredientId];
-            if (count > 0) {
-                const div = document.createElement("div");
-                const ingredient = allIngredients.get(parseInt(ingredientId));
-                div.innerHTML = `x${count} ${ingredientIdToText(ingredientId)}`;
-                div.classList.add('inventoryItem');
-                const color = ColorById.get(ingredient.color);
-                div.classList.add(color);
-                div.addEventListener('click', function (event) {
-                    sellIngredient(ingredientId);
-                });
-                ownedIngredientsDiv.append(div);
-            }
-        });
-    } else {
-        Object.keys(player.ownedIngredients).forEach(ingredientId => {
-            for (let i=0; i<player.ownedIngredients[ingredientId]; i++) {
-                const div = document.createElement("div");
-                const ingredient = allIngredients.get(parseInt(ingredientId));
-                div.innerHTML = ingredient.value;
-                div.classList.add('inventoryItem');
-                const color = ColorById.get(allIngredients.get(parseInt(ingredientId)).color);
-                div.classList.add(color, "ingredient");
-                div.addEventListener('click', function (event) {
-                    sellIngredient(ingredientId);
-                });
-                ownedIngredientsDiv.append(div);
-            }
-        })
-    }
+
+function buildIngredientDiv(ingredientId) {
+    const ingredientDiv = document.createElement("div");
+    const ingredient = allIngredients.get(parseInt(ingredientId))
+
+    const img = getImage(ingredientId);
+    ingredientDiv.append(img);
+
+    // ingredientDiv.innerHTML = ingredient.value;
+    const color = ColorById.get(ingredient.color);
+    // ingredientDiv.classList.add(color, "ingredient");
+    ingredientDiv.classList.add("ingredient");
+    return ingredientDiv;
+}
+
+function getImage(ingredientId) {
+    const img = document.createElement("img");
+    const ingredient = allIngredients.get(parseInt(ingredientId));
+    const imagePath = `images/tokens/128x128/${ColorById.get(ingredient.color)}-${ingredient.value}.png`;
+    img.src = imagePath;
+    return img;
 }
 
 
