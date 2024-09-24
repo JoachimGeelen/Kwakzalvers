@@ -7,6 +7,7 @@ const Color = {
     ORANGE: 'orange',
     BLACK: 'black',
     PURPLE: 'purple',
+    OLIVE: 'olive',
 };
 const ColorById = new Map();
 ColorById.set(0, Color.WHITE);
@@ -17,6 +18,7 @@ ColorById.set(4, Color.YELLOW);
 ColorById.set(5, Color.ORANGE);
 ColorById.set(6, Color.BLACK);
 ColorById.set(7, Color.PURPLE);
+ColorById.set(8, Color.OLIVE);
 
 const valuesByColorId = new Map();
 ColorById.forEach((color, colorId) => {
@@ -24,6 +26,8 @@ ColorById.forEach((color, colorId) => {
         values = [1, 2, 3];
     } else if ([Color.GREEN, Color.BLUE, Color.RED, Color.YELLOW].includes(color)) {
         values = [1, 2, 4];
+    } else if (color === Color.OLIVE) {
+        values = [0];
     } else {
         values = [1];
     }
@@ -407,6 +411,7 @@ function startingPosition() {
     player.purchase(3, 1);
     player.purchase(11);
     player.purchase(51);
+    // player.purchase(81);
     player.resetBag();
 }
 
