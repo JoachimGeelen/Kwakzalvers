@@ -36,6 +36,7 @@ ColorById.forEach((color, colorId) => {
 
 
 
+
 class Ingredient {
     constructor(color, value) {
         this.color = color;
@@ -67,6 +68,7 @@ class Player {
         this.inventory = {};  // Stores the total number of each ingredient owned
         this.bag = {};  // Tracks current ingredients in the bag
         this.board = []; // Stores all picked ingredients
+        this.peaLimit = 7;
     }
 
     purchase(id, quantity = 1) {
@@ -177,6 +179,95 @@ class Player {
         console.log("Bag: ", this.bag);
         console.log("board: ", this.board)
         // console.log("Owned Ingredients: ", this.ownedIngredients);
+    }
+    getBagPeaCount() {
+        let bagPeaCount = 0;
+        Object.keys(this.bag).forEach(id => {
+            const ingredient = allIngredients.get(parseInt(id));
+            if (ColorById.get(ingredient.color) == Color.WHITE) {
+                bagPeaCount += ingredient.value * this.bag[id];
+            }
+        });
+        return bagPeaCount;
+    }
+    getBoardPeaCount() {
+        let boardPeaCount = 0;
+        this.board.forEach(id => {
+            const ingredient = allIngredients.get(parseInt(id));
+            if (ColorById.get(ingredient.color) == Color.WHITE) {
+                boardPeaCount += ingredient.value;
+            }
+        });
+        return boardPeaCount;
+    }
+    getBagIngredientCount() {
+        let bagCount = 0;
+        Object.keys(this.bag).forEach(id => {
+            bagCount += this.bag[id];
+        });
+        return bagCount;
+    }
+    getKnalChance() {
+        const bagPeaCount = this.getBagPeaCount();
+        const boardPeaCount = this.getBoardPeaCount();
+        const getBagIngredientCount = this.getBagIngredientCount();
+        const peaBudget = this.peaLimit - boardPeaCount;
+        // console.log("limit: ", this.peaLimit, "\tboardPeas: ", boardPeaCount, "\tpeaBudget: ", peaBudget)
+
+        if (peaBudget < 0) return 1.00;
+
+        // number of draws that lead to blowage
+        let blowCount = 0;
+        Object.keys(this.bag).forEach(id => {
+            const ingredient = allIngredients.get(parseInt(id));
+            for (let i=0; i<this.bag[id]; i++) {
+                if (ColorById.get(ingredient.color) == Color.WHITE) {
+                    if (ingredient.value > peaBudget) {
+                        blowCount++;
+                    }
+                }
+            }
+        });
+
+        const blowChance = blowCount / parseFloat(getBagIngredientCount);
+        const blowChance_string = `${(blowChance * 100).toFixed(2)}%`
+        return blowChance;
+    }
+    getAverageDrawValue() {
+        const bagIngredientCount = this.getBagIngredientCount();
+
+        // add total of all bag-ingredient-values
+        let totalBagIngredientValue = 0;
+        Object.keys(this.bag).forEach(id => {
+            const ingredient = allIngredients.get(parseInt(id));
+            for (let i=0; i<this.bag[id]; i++) {
+                totalBagIngredientValue += ingredient.value;
+            }
+        });
+        const getAverageDrawValue = totalBagIngredientValue / parseFloat(bagIngredientCount);
+        return getAverageDrawValue;
+    }
+    getTotalBoardValue() {
+        let totalBoardValue = 0;
+        this.board.forEach(id => {
+            const ingredient = allIngredients.get(parseInt(id));
+            totalBoardValue += ingredient.value;
+        });
+        return totalBoardValue;
+    }
+    getAverageBoardValueIncreaseFromDraw() {
+        const averageBoardValueIncreaseFromDraw = this.getAverageDrawValue() / parseFloat(this.getTotalBoardValue());
+        console.log(`${this.getTotalBoardValue()} + ${this.getAverageDrawValue().toFixed(2)} (${(averageBoardValueIncreaseFromDraw * 100).toFixed(2)}%)`);
+        return averageBoardValueIncreaseFromDraw;
+    }
+    logSanityCheck() {
+        const blowChance = player.getKnalChance();
+        console.log("blow chance: ", blowChance);
+        // player.getAverageDrawValue();
+        const averageBoardValueIncreaseFromDraw = player.getAverageBoardValueIncreaseFromDraw()
+        // console.log(averageBoardValueIncreaseFromDraw);
+        const sanityPercentage = averageBoardValueIncreaseFromDraw * (1 - blowChance);
+        console.log("sanity percentage: ", sanityPercentage.toFixed(2));
     }
 }
 
@@ -342,6 +433,7 @@ function resetBag() {
 
 // Function to update the UI
 function updateUI() {
+    player.logSanityCheck();
     insertBagIngredientList(document.getElementById('bag-ingredients'), player.bag);
     insertBoardIngredientList(document.getElementById('board-ingredients'), player.board); //same as below but different due to difference between board and bag/inventory
     insertInventoryIngredientList(document.getElementById('owned-ingredients'), player.inventory);
