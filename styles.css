@@ -9,6 +9,9 @@
     --7-ingredient: hsl(308, 32%, 55%);
     --8-ingredient: #527768;
     --mobile-nav-height: 100px;
+    --highlight-color: yellow;
+    --hw: 2px;
+    --hwn: -2px;
 }
 .white {background-color: var(--0-ingredient);}
 .green {background-color: var(--1-ingredient);}
@@ -20,6 +23,7 @@
 .purple {background-color: var(--7-ingredient);}
 .olive {background-color: var(--8-ingredient);}
 
+
 /* div { */
     /* outline: 1px solid red */
     /* box-shadow:0 0 0 1px red; */
@@ -27,6 +31,7 @@
 .wrapper, html, body {
     height: 100%;
     margin: 0;
+    user-select: none;;
 }
 .wrapper {
     display: flex;
@@ -51,7 +56,7 @@
     margin: 5px;
     padding: 10px;
 
-    display: none;
+    display: flex;
     flex-direction: column;
     background-color: rgb(69, 113, 163);
 }
@@ -76,13 +81,22 @@
     background-color: rgb(53, 81, 104);
     height: 80px;
     overflow-x: scroll;
-    /* position: relative; */
+    padding-right: 40%;
+}
+.cauldron__board-history > div:last-child {
+    -webkit-filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
+                    drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color))
+                    drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
+                    drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
+    filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
+            drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color)) 
+            drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
+            drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
 }
 .cauldron__draw-menu {
     background-color: rgb(18, 64, 102);
     height: 100px;
     display: flex;
-    /* justify-content: space-evenly; */
 }
 .cauldron__draw-menu__result {
     width: 100px;
@@ -110,7 +124,7 @@
     margin: 5px;
     padding: 10px;
 
-    display: flex;
+    display: none;
     flex-direction: column;
     background-color: rgb(192, 173, 53);
 }
