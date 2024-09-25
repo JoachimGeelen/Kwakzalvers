@@ -1,0 +1,109 @@
+:root {
+    --0-ingredient: rgb(209, 222, 222);
+    --1-ingredient: #7aa82c;
+    --2-ingredient: hsl(204, 46%, 55%);
+    --3-ingredient: #ce523c;
+    --4-ingredient: #e4bf16;
+    --5-ingredient: #e58026;
+    --6-ingredient: hsl(240, 10%, 55%);
+    --7-ingredient: hsl(308, 32%, 55%);
+    --8-ingredient: #527768;
+    --mobile-nav-height: 65px;
+}
+.white {background-color: var(--0-ingredient);}
+.green {background-color: var(--1-ingredient);}
+.blue {background-color: var(--2-ingredient);}
+.red {background-color: var(--3-ingredient);}
+.yellow {background-color: var(--4-ingredient);}
+.orange {background-color: var(--5-ingredient);}
+.black {background-color: var(--6-ingredient);}
+.purple {background-color: var(--7-ingredient);}
+.olive {background-color: var(--8-ingredient);}
+
+/* div { */
+    /* outline: 1px solid red */
+    /* box-shadow:0 0 0 1px red; */
+/* } */
+.content {
+    overflow-y: auto;
+    padding-bottom: var(--mobile-nav-height);
+    /* margin-bottom:  */
+}
+.mobile-nav {
+    background-color: darkslategrey;
+    position: fixed;
+    bottom: 0;
+    height: var(--mobile-nav-height);
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.nav-block {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.logo {
+    height: 100px;
+    width: auto;
+}
+.draw-buttons-list {
+    display: flex;
+    flex-direction: column-reverse;
+    position: fixed;
+    margin-right: 10px;
+    margin-bottom: 79px;
+    right: 0;
+    bottom: 0;
+    /* bottom: 75; */
+    width: 69px;
+    /* justify-content: space-around; */
+}
+.draw-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+
+    width: 100%;
+    aspect-ratio: 1;
+
+}
+.ingredientList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+}
+.ingredient {
+    text-align: center;
+    align-content: center;
+    height: 4em;
+    aspect-ratio: 1;
+    cursor: pointer;
+    /* margin: 0.05em; */
+}
+.ingredient img {
+    /* background: url('images/tokens/128x128/_border.png');  */
+    height: 100%;
+    width: auto;
+}
+/* .inventoryItem {
+    cursor: pointer;
+} */
+.colorButtonList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+}
+.colorButton {
+    text-align: center;
+    align-content: center;
+    height: 5em;
+    width: 5em;
+    cursor: pointer;
+}

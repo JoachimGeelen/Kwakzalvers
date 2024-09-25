@@ -301,31 +301,28 @@ function ingredientIdToText(ingredientId) {
 
 
 // Function to handle color selection for purchasing and show corresponding values
-function generateBuyButtonDivs() {
-    const colorButtonsDiv = document.getElementById('buy-buttons');
+function generateColorButtons() {
+    const colorButtonsDiv = document.getElementById('color-buttons');
     colorButtonsDiv.innerHTML = '';
     ColorById.forEach((color, colorId) => {
-        // const colorButton = document.createElement('button');
-        const colorButton = document.createElement('div');
+        const colorButton = document.createElement('button');
         colorButton.textContent = color;
         colorButton.onclick = () => showValueButtons(colorId);
-        colorButton.classList.add(color, "shop__front__buy-buttons__button");
+        colorButton.classList.add(color, "colorButton");
 
         colorButtonsDiv.appendChild(colorButton);
     });
 }
 function showValueButtons(colorId) {
-    const valueButtonsDiv = document.getElementById('valueOverlayButtons');
+    const valueButtonsDiv = document.getElementById('value-buttons');
     valueButtonsDiv.innerHTML = '';
     valuesByColorId.get(colorId).forEach(value => {
-        const valueButton = document.createElement('div');
+        const valueButton = document.createElement('button');
         valueButton.textContent = value;
         valueButton.onclick = () => buyIngredient(getIngredientId(colorId, value));
-        valueButton.classList.add(ColorById.get(colorId), "shop__front__value-overlay__buttons__button");
+        valueButton.classList.add(ColorById.get(colorId), "colorButton");
         valueButtonsDiv.appendChild(valueButton);
     });
-    const valueOverlay = document.getElementById('valueOverlay');
-    valueOverlay.style.display = 'block';
 }
 
 
@@ -436,11 +433,10 @@ function resetBag() {
 
 // Function to update the UI
 function updateUI() {
-    // player.logSanityCheck();
+    player.logSanityCheck();
     insertBagIngredientList(document.getElementById('bag-ingredients'), player.bag);
-    insertBoardIngredientList(document.getElementById('board-history'), player.board); //same as below but different due to difference between board and bag/inventory
-    insertInventoryIngredientList(document.getElementById('inventory-ingredients'), player.inventory);
-    setBoardHistoryScrollAmount(document.getElementById('board-history'));
+    insertBoardIngredientList(document.getElementById('board-ingredients'), player.board); //same as below but different due to difference between board and bag/inventory
+    insertInventoryIngredientList(document.getElementById('owned-ingredients'), player.inventory);
 }
 
 
@@ -500,39 +496,6 @@ function getImagePath(ingredient) {
     return `images/tokens/128x128/${ColorById.get(ingredient.color)}-${ingredient.value}.png`;
 }
 
-function addNavigationListeners() {
-    // UI STUFF
-    // Get references to the divs
-    const cauldronDiv = document.getElementById('cauldron');
-    const storeDiv = document.getElementById('shop');
-    
-    // Get references to the navigation links
-    const viewCookingLink = document.getElementById('view-cauldron');
-    const viewStoreLink = document.getElementById('view-store');
-    const valueOverlay = document.getElementById('valueOverlay');
-    
-    // Add event listeners to toggle visibility
-    viewCookingLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        cauldronDiv.style.display = 'flex';
-        storeDiv.style.display = 'none';
-        valueOverlay.style.display = 'none';
-    });
-    
-    viewStoreLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        cauldronDiv.style.display = 'none';
-        storeDiv.style.display = 'flex';
-    });
-}
-
-function setBoardHistoryScrollAmount(div) {
-    div.scrollLeft = 1000000;
-    console.log(div.scrollLeft);
-}
-
-
-
 
 function startingPosition() {
     player.purchase(1, 4);
@@ -551,36 +514,30 @@ const player = new Player();
 const allIngredients = createAllIngredients();
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    const popupOverlay = document.getElementById('popup-overlay');
-    const closePopup = document.getElementById('close-opup');
-    function closePopupFunc() {
-        popupOverlay.style.display = 'none';
-    }
-    function openPopupFunc() {
-        popupOverlay.style.display = 'block';
-    }
-    closePopup.addEventListener('click', closePopupFunc);
-    popupOverlay.addEventListener('click', closePopupFunc);
 
-    
-    addNavigationListeners();
-    generateBuyButtonDivs();
-    const drawSingleButton = document.getElementById('drawSingle');
-    const drawMultipleButton = document.getElementById('drawMultiple');
-    const valueOverlay = document.getElementById('valueOverlay');
-    const cauldronReset = document.getElementById('cauldronReset');
-    function closeValueOverlayFunc() {
-        valueOverlay.style.display = 'none';
-    }
-    // function openValueOverlayFunc() {}
-    const valueOverlayClose = document.getElementById('valueOverlayClose');
-    drawSingleButton.addEventListener('click', pickIngredient);
-    drawMultipleButton.addEventListener('click', mydrawMultipleIngredients);
-    valueOverlayClose.addEventListener('click', closeValueOverlayFunc);
-    valueOverlay.addEventListener('click', closeValueOverlayFunc);
-    cauldronReset.addEventListener('click', resetBag);
+
+// UI STUFF
+// Get references to the divs
+const cauldronDiv = document.getElementById('Cauldron');
+const storeDiv = document.getElementById('Store');
+
+// Get references to the navigation links
+const viewCookingLink = document.getElementById('view-cauldron');
+const viewStoreLink = document.getElementById('view-store');
+
+// Add event listeners to toggle visibility
+viewCookingLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    cauldronDiv.style.display = 'block';
+    storeDiv.style.display = 'none';
 });
+
+viewStoreLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    cauldronDiv.style.display = 'none';
+    storeDiv.style.display = 'block';
+});
+generateColorButtons();
 
 
 
