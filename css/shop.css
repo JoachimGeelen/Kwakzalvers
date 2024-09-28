@@ -3,20 +3,17 @@
     background-color: rgb(192, 173, 53);
 }
 .shop__inventory-ingredients {
-    /* flex: auto; */
-    height: 75%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: flex-start;
+    /* height: 75%; */
+    /* height: 360px; */
+    flex: 7;
+    display: grid;
     background-color: rgb(100, 94, 46);
     overflow: hidden;
 }
 .shop__front {
+    /* flex: 1; */
     display: block;
-    flex-wrap: wrap;
     background-color: #685c43;
-    justify-content: center;
     position: relative
 }
 .shop__front__buy-buttons {
@@ -55,7 +52,8 @@
 .shop__front__value-overlay__buttons__button {
     text-align: center;
     align-content: center;
-    height: 75px;
+    /* height: 75px; */
+    height: 50%;
     width: 75px;
     cursor: pointer;
 }

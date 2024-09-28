@@ -211,6 +211,13 @@ class Player {
         });
         return bagCount;
     }
+    getInventoryIngredientCount() {
+        let inventoryCount = 0;
+        Object.keys(this.inventory).forEach(id => {
+            inventoryCount += this.inventory[id];
+        });
+        return inventoryCount;
+    }
     getKnalChance() {
         const bagPeaCount = this.getBagPeaCount();
         const boardPeaCount = this.getBoardPeaCount();
@@ -452,12 +459,40 @@ function resetBag() {
 function updateUI() {
     // player.logSanityCheck();
     insertBagIngredientList(document.getElementById('bag-ingredients'), player.bag);
+    setGridDivStyling(document.getElementById('bag-ingredients'), player.getBagIngredientCount());
+
     insertBoardIngredientList(document.getElementById('board-history'), player.board); //same as below but different due to difference between board and bag/inventory
+
     insertInventoryIngredientList(document.getElementById('inventory-ingredients'), player.inventory);
+    setGridDivStyling(document.getElementById('inventory-ingredients'), player.getInventoryIngredientCount());
+
     setBoardHistoryScrollAmount(document.getElementById('board-history'));
 }
 
 
+function setGridDivStyling(gridDiv, itemCount, baseColumns = 4) {
+    const containerWidth = gridDiv.clientWidth;
+    const containerHeight = gridDiv.clientHeight;
+    if (!containerWidth || !containerHeight) return;
+
+    let columns = baseColumns;
+    let rows = 1;
+
+    let maxSquareWidth = 1;
+    let running = true;
+    while (running) {
+        maxSquareWidth = containerWidth / columns;
+        rows = Math.floor(containerHeight / maxSquareWidth);
+        if (itemCount > columns * rows) {
+            columns++;
+        }
+        else {
+            running = false;
+        }
+    }
+    gridDiv.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    gridDiv.style.gridTemplateRows = `repeat(${rows}, minmax(auto, ${maxSquareWidth}px))`;
+}
 
 
 
@@ -473,8 +508,17 @@ function insertBagIngredientList(div, ingredientList) {
 }
 function insertBoardIngredientList(div, board) {
     div.innerHTML = '';
+    const historyHeight = div.clientHeight;
+    const historyWidth = div.clientWidth;
+    const rightPadding = (historyWidth - historyHeight) / 2;
+    div.style.paddingRight = `${rightPadding}px`;
+
     board.forEach((ingredientId, boardId) => {
         const ingredientDiv = buildIngredientDiv(ingredientId);
+        
+        ingredientDiv.style.height = `${historyHeight}px`;
+        ingredientDiv.style.width = `${historyHeight}px`;
+        ingredientDiv.style.flex = 'none';
         ingredientDiv.addEventListener('click', function (event) {
             removeFromBoardWrapper(boardId);
         });
@@ -496,13 +540,14 @@ function buildIngredientDiv(ingredientId) {
     const ingredientDiv = document.createElement("div");
     const ingredient = allIngredients.get(parseInt(ingredientId))
 
-    const img = getImage(ingredientId);
-    ingredientDiv.append(img);
+    // const img = getImage(ingredientId);
+    // ingredientDiv.append(img);
 
     // ingredientDiv.innerHTML = ingredient.value;
     const color = ColorById.get(ingredient.color);
     // ingredientDiv.classList.add(color, "ingredient");
     ingredientDiv.classList.add("ingredient");
+    ingredientDiv.style.backgroundImage = `url(${getImagePath(ingredient)})`;
     return ingredientDiv;
 }
 
@@ -530,16 +575,18 @@ function addNavigationListeners() {
     
     // Add event listeners to toggle visibility
     viewCookingLink.addEventListener('click', function(event) {
-        event.preventDefault();
+        // event.preventDefault();
         cauldronDiv.style.display = 'flex';
         storeDiv.style.display = 'none';
         valueOverlay.style.display = 'none';
+        updateUI();
     });
     
     viewStoreLink.addEventListener('click', function(event) {
-        event.preventDefault();
+        // event.preventDefault();
         cauldronDiv.style.display = 'none';
         storeDiv.style.display = 'flex';
+        updateUI();
     });
 }
 
@@ -572,18 +619,6 @@ const allIngredients = createAllIngredients();
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const popupOverlay = document.getElementById('popup-overlay');
-    const closePopup = document.getElementById('close-opup');
-    function closePopupFunc() {
-        popupOverlay.style.display = 'none';
-    }
-    function openPopupFunc() {
-        popupOverlay.style.display = 'block';
-    }
-    closePopup.addEventListener('click', closePopupFunc);
-    popupOverlay.addEventListener('click', closePopupFunc);
-
-    
     addNavigationListeners();
     generateBuyButtonDivs();
     const drawSingleButton = document.getElementById('drawSingle');

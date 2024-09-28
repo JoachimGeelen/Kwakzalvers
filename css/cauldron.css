@@ -1,20 +1,14 @@
 .cauldron {
-    display: flex;
     background-color: rgb(69, 113, 163);
 }
 .cauldron__bag-ingredients {
-    height: 75%;
-    /* max-height: 54vh; */
-    /* height:300px; */
-    width: 100%;
-    /* width:100%; */
-    /* grid-template-rows: repeat(auto-fit, minmax(30px, auto)); */
+    /* height: 75%; */
+    /* height: 360px; */
+    flex: 5;
+    /* width: 100%; */
     display: grid;
-    grid-auto-rows: minmax(auto, 60px);
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    /* justify-content: center; */
-    /* align-content: stretch; */
     background-color: rgb(27, 73, 110);
+    overflow-y: hidden;
 }
 .ingredient {
     /* flex-shrink: 1; */
@@ -27,17 +21,13 @@
     align-content: center;
     /* height: 4em; */
     cursor: pointer;
+    background-size: 100% 100%;
     /* margin: 0.05em; */
 }
-.ingredient img {
-    /* background: url('images/tokens/128x128/_border.png');  */
+/* .ingredient--history {
     height: 100%;
     width: 100%;
-    /* height: auto; */
-    /* object-fit: contain; */
-    /* aspect-ratio: 1; */
-    /* width: auto; */
-}
+} */
 .cauldron__reset, .cauldron__board-history, .cauldron__draw-menu {
     flex-shrink: 0;
 }
@@ -50,11 +40,13 @@
     font-size: xx-large;
 }
 .cauldron__board-history {
+    flex: 1;
     display: flex;
     background-color: rgb(53, 81, 104);
-    height: 15%;
+    /* height: 15%; */
     overflow-x: scroll;
-    padding-right: 40%;
+    overflow-y: hidden;
+    /* padding-right: 40%; */
 }
 .cauldron__board-history > div:last-child {
     -webkit-filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
@@ -67,8 +59,9 @@
             drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
 }
 .cauldron__draw-menu {
+    flex: 1;
     background-color: rgb(18, 64, 102);
-    height: 10%;
+    /* height: 10%; */
     display: flex;
 }
 .cauldron__draw-menu__result {
