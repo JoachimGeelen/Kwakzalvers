@@ -37,6 +37,10 @@ ColorById.forEach((color, colorId) => {
 
 
 
+
+
+
+
 class Ingredient {
     constructor(color, value) {
         this.color = color;
@@ -272,6 +276,15 @@ class Player {
 }
 
 
+
+
+
+
+
+
+
+
+
 function undoLastSelect() {
     // console.log(player.board)
     player.undoPlay();
@@ -285,8 +298,6 @@ function removeFromBoardWrapper(boardId) {
         updateUI();
     }
 }
-
-
 
 // Game logic (Player, Ingredient, Color) stays the same as before
 
@@ -434,6 +445,9 @@ function resetBag() {
     }
 }
 
+
+
+
 // Function to update the UI
 function updateUI() {
     // player.logSanityCheck();
@@ -442,6 +456,9 @@ function updateUI() {
     insertInventoryIngredientList(document.getElementById('inventory-ingredients'), player.inventory);
     setBoardHistoryScrollAmount(document.getElementById('board-history'));
 }
+
+
+
 
 
 function insertBagIngredientList(div, ingredientList) {
@@ -531,18 +548,21 @@ function setBoardHistoryScrollAmount(div) {
     console.log(div.scrollLeft);
 }
 
-
-
-
 function startingPosition() {
-    player.purchase(1, 4);
-    player.purchase(2, 2);
-    player.purchase(3, 1);
     player.purchase(11);
     player.purchase(51);
+    player.purchase(21, 4);
+    player.purchase(32, 2);
+    player.purchase(44, 1);
+    // player.purchase(24, 26);
     // player.purchase(81);
     player.resetBag();
 }
+
+
+
+
+
 
 
 
@@ -581,6 +601,8 @@ document.addEventListener('DOMContentLoaded', function () {
     valueOverlay.addEventListener('click', closeValueOverlayFunc);
     cauldronReset.addEventListener('click', resetBag);
 });
+
+
 
 
 

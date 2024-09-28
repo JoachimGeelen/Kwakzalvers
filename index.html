@@ -6,7 +6,9 @@
     <title>Kwakzalvers</title>
     <!-- Bulma CSS Framework -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cauldron.css">
+    <link rel="stylesheet" href="css/shop.css">
 
 </head>
 <body class="wrapper">
@@ -14,14 +16,14 @@
         <div class="cauldron" id="cauldron">
             <div class="cauldron__bag-ingredients" id="bag-ingredients"></div>
             <span class="cauldron__reset" id="cauldronReset">↺</span>
+            <div class="cauldron__board-history" id="board-history"></div>
             <div class="cauldron__draw-menu">
-                <div class="cauldron__draw-menu__result"></div>
+                <!-- <div class="cauldron__draw-menu__result"></div> -->
                 <div class="cauldron__draw-menu__buttons">
                     <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Multiple</div>
                     <div class="cauldron__draw-menu__buttons__single" id="drawSingle">Single</div>
                 </div>
             </div>
-            <div class="cauldron__board-history" id="board-history"></div>
         </div>
         <div id="shop" class="shop">
             <div class="shop__inventory-ingredients" id="inventory-ingredients"></div>
@@ -46,5 +48,8 @@
         </div>
     </div>
 </body>
-<script src="index.js"></script>
+<!-- <script type='module' src="js/main.js"></script> -->
+<!-- <script type='module' src="js/sub.js"></script> -->
+<script src="js/index.js"></script>
+<!-- <script src="js/index2.js"></script> -->
 </html>
