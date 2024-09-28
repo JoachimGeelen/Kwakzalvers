@@ -1,0 +1,100 @@
+.cauldron {
+    display: flex;
+    background-color: rgb(69, 113, 163);
+}
+.cauldron__bag-ingredients {
+    height: 75%;
+    /* max-height: 54vh; */
+    /* height:300px; */
+    width: 100%;
+    /* width:100%; */
+    /* grid-template-rows: repeat(auto-fit, minmax(30px, auto)); */
+    display: grid;
+    grid-auto-rows: minmax(auto, 60px);
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    /* justify-content: center; */
+    /* align-content: stretch; */
+    background-color: rgb(27, 73, 110);
+}
+.ingredient {
+    /* flex-shrink: 1; */
+    /* flex-basis: 60px; */
+    /* max-width: 20%; */
+    /* width: 60px; */
+    /* min-width: 30px; */
+    /* position: relative; */
+    text-align: center;
+    align-content: center;
+    /* height: 4em; */
+    cursor: pointer;
+    /* margin: 0.05em; */
+}
+.ingredient img {
+    /* background: url('images/tokens/128x128/_border.png');  */
+    height: 100%;
+    width: 100%;
+    /* height: auto; */
+    /* object-fit: contain; */
+    /* aspect-ratio: 1; */
+    /* width: auto; */
+}
+.cauldron__reset, .cauldron__board-history, .cauldron__draw-menu {
+    flex-shrink: 0;
+}
+.cauldron__reset {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: xx-large;
+}
+.cauldron__board-history {
+    display: flex;
+    background-color: rgb(53, 81, 104);
+    height: 15%;
+    overflow-x: scroll;
+    padding-right: 40%;
+}
+.cauldron__board-history > div:last-child {
+    -webkit-filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
+                    drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color))
+                    drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
+                    drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
+    filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
+            drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color)) 
+            drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
+            drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
+}
+.cauldron__draw-menu {
+    background-color: rgb(18, 64, 102);
+    height: 10%;
+    display: flex;
+}
+.cauldron__draw-menu__result {
+    width: 100px;
+    background-color: #527768;
+}
+.cauldron__draw-menu__buttons {
+    flex: auto;
+    display: flex;
+    justify-content: space-evenly;
+    /* place-items: center; */
+}
+.cauldron__draw-menu__buttons * {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    place-content: center;
+    place-items: center;
+}
+.cauldron__draw-menu__buttons__multiple {
+    /* width: 100px; */
+    /* flex: 1; */
+    background-color: rgb(128, 33, 33) 
+}
+.cauldron__draw-menu__buttons__single {
+    /* width: 100px; */
+    /* flex: 1; */
+    background-color: rgb(47, 132, 47);
+}

@@ -1,0 +1,68 @@
+.shop {
+    display: none;
+    background-color: rgb(192, 173, 53);
+}
+.shop__inventory-ingredients {
+    /* flex: auto; */
+    height: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    background-color: rgb(100, 94, 46);
+    overflow: hidden;
+}
+.shop__front {
+    display: block;
+    flex-wrap: wrap;
+    background-color: #685c43;
+    justify-content: center;
+    position: relative
+}
+.shop__front__buy-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #685c43;
+    justify-content: center;
+}
+.shop__front__buy-buttons__button {
+    text-align: center;
+    align-content: center;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+}
+.shop__front__value-overlay {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    /* transform: translate(-50%, -50%) */
+    /* transform: translateY(50%) */
+
+    /* transform: translateY(-100%); */
+}
+.shop__front__value-overlay__buttons {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.shop__front__value-overlay__buttons__button {
+    text-align: center;
+    align-content: center;
+    height: 75px;
+    width: 75px;
+    cursor: pointer;
+}
+.shop__front__value-overlay__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-size:xx-large;
+}
