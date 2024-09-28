@@ -562,30 +562,54 @@ function getImagePath(ingredient) {
     return `images/tokens/128x128/${ColorById.get(ingredient.color)}-${ingredient.value}.png`;
 }
 
+
+
 function addNavigationListeners() {
     // UI STUFF
     // Get references to the divs
     const cauldronDiv = document.getElementById('cauldron');
-    const storeDiv = document.getElementById('shop');
+    const shopDiv = document.getElementById('shop');
+    const settingsDiv = document.getElementById('settings');
     
     // Get references to the navigation links
-    const viewCookingLink = document.getElementById('view-cauldron');
-    const viewStoreLink = document.getElementById('view-store');
+    const viewCookingLink = document.getElementById('viewCauldron');
+    const viewShopLink = document.getElementById('viewShop');
     const valueOverlay = document.getElementById('valueOverlay');
-    
+    const viewSettingsLink = document.getElementById('viewSettings')
+
+    const divs = [cauldronDiv, shopDiv, settingsDiv];
+    const menuDivs = [viewCookingLink, viewShopLink, viewSettingsLink]
+
+    function deactivateAll() {
+        divs.forEach(div => {
+            div.style.display = 'none';
+        });
+        menuDivs.forEach(div => {
+            div.style.backgroundColor = '#2f4f4f';
+        });
+    }
+
     // Add event listeners to toggle visibility
     viewCookingLink.addEventListener('click', function(event) {
         // event.preventDefault();
+        deactivateAll();
         cauldronDiv.style.display = 'flex';
-        storeDiv.style.display = 'none';
-        valueOverlay.style.display = 'none';
+        this.style.backgroundColor = '#3b6363';
         updateUI();
     });
     
-    viewStoreLink.addEventListener('click', function(event) {
+    viewShopLink.addEventListener('click', function(event) {
         // event.preventDefault();
-        cauldronDiv.style.display = 'none';
-        storeDiv.style.display = 'flex';
+        deactivateAll();
+        shopDiv.style.display = 'flex';
+        this.style.backgroundColor = '#3b6363';
+        updateUI();
+    });
+    viewSettingsLink.addEventListener('click', function(event) {
+        // event.preventDefault();
+        deactivateAll()
+        settingsDiv.style.display = 'flex';
+        this.style.backgroundColor = '#3b6363';
         updateUI();
     });
 }

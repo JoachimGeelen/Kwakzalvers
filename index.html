@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/cauldron.css">
     <link rel="stylesheet" href="css/shop.css">
+    <link rel="stylesheet" href="css/settings.css">
 
 </head>
 <body class="wrapper">
@@ -18,7 +19,7 @@
             <span class="cauldron__reset" id="cauldronReset">↺</span>
             <div class="cauldron__board-history" id="board-history"></div>
             <div class="cauldron__draw-menu">
-                <!-- <div class="cauldron__draw-menu__result"></div> -->
+                <div class="cauldron__draw-menu__result" id="cauldronReset"></div>
                 <div class="cauldron__draw-menu__buttons">
                     <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Multiple</div>
                     <div class="cauldron__draw-menu__buttons__single" id="drawSingle">Single</div>
@@ -36,12 +37,18 @@
                 </div>
             </div>
         </div>
+        <div class="settings" id="settings">
+
+        </div>
     </div>
-    <nav class="mobile-nav">
-        <a class="nav-block__settings" id="settings">Settings</a>
-        <a class="nav-block" id="view-cauldron" >Cauldron</a>
-        <a class="nav-block" id="view-store">Store</a>
-    </nav>
+    <div class="nav">
+        <div class="nav__divider" id="navDivider"></div>
+        <nav class="nav__menu">
+            <a class="nav-block__settings" id="viewSettings">Settings</a>
+            <a class="nav-block" id="viewCauldron" >Cauldron</a>
+            <a class="nav-block" id="viewShop">Shop</a>
+        </nav>
+    </div>
 </body>
 <!-- <script type='module' src="js/main.js"></script> -->
 <!-- <script type='module' src="js/sub.js"></script> -->
