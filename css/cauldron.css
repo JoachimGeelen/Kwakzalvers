@@ -49,24 +49,31 @@
     display: flex;
 }
 .cauldron__draw-menu__result {
-    width: 100px;
+    /* width: 100px; */
+    flex: 1;
+    display: flex;
+    cursor: pointer;
+    place-content: center;
+    place-items: center;
     background-color: #527768;
 }
+
 .cauldron__draw-menu__buttons {
-    flex: auto;
+    flex: 3;
     display: flex;
-    justify-content: space-evenly;
 }
 .cauldron__draw-menu__buttons * {
-    width: 100%;
-    height: 100%;
-    display:flex;
+    /* width: 100%; */
+    /* height: 100%; */
+    display: flex;
     place-content: center;
     place-items: center;
 }
 .cauldron__draw-menu__buttons__multiple {
+    flex: 1;
     background-color: rgb(128, 33, 33) 
 }
 .cauldron__draw-menu__buttons__single {
+    flex: 2;
     background-color: rgb(47, 132, 47);
 }
