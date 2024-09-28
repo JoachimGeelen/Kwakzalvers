@@ -289,7 +289,11 @@ class Player {
 
 
 
-
+function vib(milis) {
+    if (navigator.vibrate) {
+        navigator.vibrate(milis);
+    }
+}
 
 
 function undoLastSelect() {
@@ -350,6 +354,7 @@ function showValueButtons(colorId) {
 // Function to buy an ingredient
 function buyIngredient(ingredientId) {
     player.purchase(ingredientId);
+    vib(50);
     updateUI();  // Update the UI after purchase
 }
 
@@ -358,19 +363,19 @@ function sellIngredient(ingredientId) {
     if (confirm(`Sell ${ingredientIdToText(ingredientId)}?`)) {
         player.resetBag();
 
-        if (navigator.vibrate) {
-            navigator.vibrate(50);  // Vibrate for 200ms
-        }
         player.sell(ingredientId);  // Calls the remove method in the Player class
+        vib(50);
         updateUI();  // Update the UI after removal
     }
 }
+
 
 // Function to pick a random ingredient
 function pickIngredient() {
     const ingredientId = player.drawRandomIngredientId(player.bag);
     if (ingredientId === -1) return;
     player.placeIngredientOnBoard(ingredientId)
+    vib(50);
     updateUI();
 }
 
@@ -378,6 +383,7 @@ function pickSpecificIngredient(ingredientId) {
     const pickedIngredientId = player.drawSpecificIngredient(ingredientId);
     if (pickedIngredientId === -1) return;
     player.placeIngredientOnBoard(pickedIngredientId);
+    vib(50);
     updateUI();
 }
 
@@ -446,9 +452,7 @@ function resetBag() {
         player.resetBag();
         updateUI();  // Update the UI after resetting
 
-        if (navigator.vibrate) {
-            navigator.vibrate(100);  // Vibrate for 200ms
-        }
+        vib(300);
     }
 }
 
@@ -585,7 +589,7 @@ function addNavigationListeners() {
             div.style.display = 'none';
         });
         menuDivs.forEach(div => {
-            div.style.backgroundColor = '#2f4f4f';
+            div.classList.remove('--active');
         });
     }
 
@@ -594,7 +598,7 @@ function addNavigationListeners() {
         // event.preventDefault();
         deactivateAll();
         cauldronDiv.style.display = 'flex';
-        this.style.backgroundColor = '#3b6363';
+        this.classList.add('--active');
         updateUI();
     });
     
@@ -602,14 +606,14 @@ function addNavigationListeners() {
         // event.preventDefault();
         deactivateAll();
         shopDiv.style.display = 'flex';
-        this.style.backgroundColor = '#3b6363';
+        this.classList.add('--active');
         updateUI();
     });
     viewSettingsLink.addEventListener('click', function(event) {
         // event.preventDefault();
         deactivateAll()
         settingsDiv.style.display = 'flex';
-        this.style.backgroundColor = '#3b6363';
+        this.classList.add('--active');
         updateUI();
     });
 }
