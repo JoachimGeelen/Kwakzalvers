@@ -375,7 +375,7 @@ function pickIngredient() {
     const ingredientId = player.drawRandomIngredientId(player.bag);
     if (ingredientId === -1) return;
     player.placeIngredientOnBoard(ingredientId)
-    vib(50);
+    vib(milis);
     updateUI();
 }
 
@@ -643,6 +643,7 @@ function startingPosition() {
 
 const player = new Player();
 const allIngredients = createAllIngredients();
+let milis = 50;
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -666,8 +667,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('vibrationTest__input');
     const button = document.getElementById('vibrationTest__button');
     button.addEventListener('click', function () {
-        vib(input);
-        console.log("TRILLING   ", parseInt(input.value))
+        milis = parseInt(input.value);
+        console.log("TRILLING   ", milis)
     });
 });
 
