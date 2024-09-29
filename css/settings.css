@@ -1,6 +1,24 @@
 .settings {
     background-color: rgb(76, 113, 73);
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 30px;
 }
+/* .settings__vibration {
+    display: flex;    
+} */
+.settings * {
+    display: flex;
+}
+input{
+    margin: 0;
+    margin-right: 13px;
+    display: flex;
+    height: 35px;  
+    width: 35px;
+}
+
 
 .button {
     height: 50px;

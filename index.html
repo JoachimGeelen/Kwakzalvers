@@ -17,6 +17,7 @@
         <div class="cauldron" id="cauldron">
             <div class="cauldron__bag-ingredients" id="bag-ingredients"></div>
             <!-- <span class="cauldron__reset" id="cauldronReset">↺</span> -->
+            <div class="cauldron__sideBoard" id="sideBoard"></div>
             <div class="cauldron__board-history" id="board-history"></div>
             <div class="cauldron__draw-menu">
                 <div class="cauldron__draw-menu__result" id="cauldronReset">Reset</div>
@@ -38,8 +39,18 @@
             </div>
         </div>
         <div class="settings" id="settings">
-            <input type="text" id="vibrationTest__input" name="name" size="10" />
-            <input type="button" id="vibrationTest__button" class="button"/>
+            <div class="settings__vibration">
+                <input type="checkbox" id="settingsVibrationToggle" checked />
+                <labe for="settingsVibrationToggle">Vibration</labe>
+            </div>
+            <div class="settings__multiple">
+                <input type="checkbox" id="settingsDrawMultipleToggle" checked />
+                <labe for="settingsMultipleToggle">Draw Multiple</labe>
+            </div>
+            <div class="settings__sideBoard">
+                <input type="checkbox" id="settingsSideBoardToggle" />
+                <labe for="settingsSideBoardToggle">Side Board</labe>
+            </div>
         </div>
     </div>
     <div class="nav">

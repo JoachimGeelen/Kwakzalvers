@@ -290,6 +290,7 @@ class Player {
 
 
 function vib(milis) {
+    if (!vibrationSetting) return; 
     if (navigator.vibrate) {
         navigator.vibrate(milis);
     }
@@ -375,7 +376,7 @@ function pickIngredient() {
     const ingredientId = player.drawRandomIngredientId(player.bag);
     if (ingredientId === -1) return;
     player.placeIngredientOnBoard(ingredientId)
-    vib(milis);
+    vib(50);
     updateUI();
 }
 
@@ -452,7 +453,7 @@ function resetBag() {
         player.resetBag();
         updateUI();  // Update the UI after resetting
 
-        vib(200);
+        vib(150);
     }
 }
 
@@ -623,11 +624,14 @@ function setBoardHistoryScrollAmount(div) {
 }
 
 function startingPosition() {
+    player.purchase(1, 4);
+    player.purchase(2, 2);
+    player.purchase(3);
     player.purchase(11);
     player.purchase(51);
-    player.purchase(21, 4);
-    player.purchase(32, 2);
-    player.purchase(44, 1);
+    // player.purchase(21, 4);
+    // player.purchase(32, 2);
+    // player.purchase(44, 1);
     // player.purchase(24, 26);
     // player.purchase(81);
     player.resetBag();
@@ -643,7 +647,10 @@ function startingPosition() {
 
 const player = new Player();
 const allIngredients = createAllIngredients();
-let milis = 50;
+let vibrationSetting = true;
+let drawMultipleSetting = true;
+// let milis = 50;
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -653,6 +660,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const drawMultipleButton = document.getElementById('drawMultiple');
     const valueOverlay = document.getElementById('valueOverlay');
     const cauldronReset = document.getElementById('cauldronReset');
+    const vibrationToggle = document.getElementById('settingsVibrationToggle');
+    const drawMultipleToggle = document.getElementById('settingsDrawMultipleToggle');
+    const sideBoardToggle = document.getElementById('settingsSideBoardToggle');
+
     function closeValueOverlayFunc() {
         valueOverlay.style.display = 'none';
     }
@@ -663,13 +674,40 @@ document.addEventListener('DOMContentLoaded', function () {
     valueOverlayClose.addEventListener('click', closeValueOverlayFunc);
     valueOverlay.addEventListener('click', closeValueOverlayFunc);
     cauldronReset.addEventListener('click', resetBag);
-
-    const input = document.getElementById('vibrationTest__input');
-    const button = document.getElementById('vibrationTest__button');
-    button.addEventListener('click', function () {
-        milis = parseInt(input.value);
-        console.log("TRILLING   ", milis)
+    vibrationToggle.addEventListener('change', function() {
+        if (this.checked) vibrationSetting = true;
+        else vibrationSetting = false;
     });
+    drawMultipleToggle.addEventListener('change', function() {
+        const drawMultipleDiv = document.getElementById('drawMultiple');
+        if (this.checked) {
+            drawMultipleDiv.style.display = 'flex';
+            drawMultipleSetting = true;
+            console.log(drawMultipleSetting)
+        }
+        else {
+            drawMultipleDiv.style.display = 'none';
+            drawMultipleSetting = false;
+            console.log(drawMultipleSetting)
+        }
+    });
+    sideBoardToggle.addEventListener('change', function() {
+        const sideBoardDiv = document.getElementById('sideBoard');
+        if (this.checked) {
+            sideBoardDiv.style.display = 'grid';
+        }
+        else {
+            sideBoardDiv.style.display = 'none';
+        }
+    });
+
+
+    // const input = document.getElementById('vibrationTest__input');
+    // const button = document.getElementById('vibrationTest__button');
+    // button.addEventListener('click', function () {
+    //     milis = parseInt(input.value);
+    //     console.log("TRILLING   ", milis)
+    // });
 });
 
 

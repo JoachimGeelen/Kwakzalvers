@@ -9,6 +9,12 @@
     background-color: rgb(27, 73, 110);
     overflow-y: hidden;
 }
+.cauldron__sideBoard {
+    flex: 2;
+    display:none;
+    background-color: rgb(19, 30, 40);
+    overflow-y: hidden;
+}
 .ingredient {
     text-align: center;
     align-content: center;
@@ -71,6 +77,7 @@
 }
 .cauldron__draw-menu__buttons__multiple {
     flex: 1;
+    display: flex;
     background-color: rgb(128, 33, 33) 
 }
 .cauldron__draw-menu__buttons__single {
