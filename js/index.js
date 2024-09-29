@@ -72,6 +72,7 @@ class Player {
         this.inventory = {};  // Stores the total number of each ingredient owned
         this.bag = {};  // Tracks current ingredients in the bag
         this.board = []; // Stores all picked ingredients
+        this.sideboard = {}; // Stores ingredients put to the side
         this.peaLimit = 7;
     }
 
@@ -105,6 +106,10 @@ class Player {
 
     resetBag() {
         this.bag = { ...this.inventory };  // Reset bag to match owned ingredients
+    }
+
+    resetSideboard() {
+        this.sideboard = {};
     }
 
     isEmpty(ingredientList) {
@@ -161,17 +166,21 @@ class Player {
         this.board.push(ingredientId);
     }
 
-    // playSingleAction() {
-    //     const randomIngredientId = this.drawRandomIngredientId(this.bag);
-    //     this.placeIngredientOnBoard(randomIngredientId);
-    //     return randomIngredientId;
-    // }
-    removeFromBoard(boardId) {
+    // TODO group these functions maybe?
+    removeFromBoardAddToBag(boardId) {
         if (this.board.length === 0) return;
         if (boardId < 0) throw new Error("bad board ID");
         const selectedIngredientId = this.board[boardId];
         this.board.splice(boardId, 1);
         this.bag[selectedIngredientId]++;
+    }
+    removeFromBoardAddToSideboard(boardId) {
+        if (this.board.length === 0) return;
+        if (boardId < 0) throw new Error("bad board ID");
+        const selectedIngredientId = this.board[boardId];
+        this.board.splice(boardId, 1);
+        if (!this.sideboard[selectedIngredientId]) this.sideboard[selectedIngredientId] = 0;
+        this.sideboard[selectedIngredientId]++;
     }
 
     undoPlay() {
@@ -217,6 +226,13 @@ class Player {
             inventoryCount += this.inventory[id];
         });
         return inventoryCount;
+    }
+    getSideboardIngredientCount() {
+        let sideboardCount = 0;
+        Object.keys(this.sideboard).forEach(id => {
+            sideboardCount += this.sideboard[id];
+        });
+        return sideboardCount;
     }
     getKnalChance() {
         const bagPeaCount = this.getBagPeaCount();
@@ -280,6 +296,14 @@ class Player {
         const sanityPercentage = averageBoardValueIncreaseFromDraw * (1 - blowChance);
         console.log("sanity percentage: ", sanityPercentage.toFixed(2));
     }
+    placeOnSideboard(ingredientId) {
+        this.sideboard[ingredientId]++;
+    }
+    drawSpecificIngredientFromSideboard(ingredientId) {
+        if (this.isEmpty(this.sideboard)) return -1;
+        this.sideboard[ingredientId]--;
+        return ingredientId;
+    }
 }
 
 
@@ -304,9 +328,16 @@ function undoLastSelect() {
     updateUI();
 }
 
-function removeFromBoardWrapper(boardId) {
+// TODO maybe group these functions?
+function removeFromBoardAddToBagWrapper(boardId) {
     if (confirm(`Remove ${ingredientIdToText(player.board[boardId])}?`)) {
-        player.removeFromBoard(boardId);
+        player.removeFromBoardAddToBag(boardId);
+        updateUI();
+    }
+}
+function removeFromBoardAddToSideboardWrapper(boardId) {
+    if (confirm(`Remove ${ingredientIdToText(player.board[boardId])}?`)) {
+        player.removeFromBoardAddToSideboard(boardId);
         updateUI();
     }
 }
@@ -363,7 +394,6 @@ function buyIngredient(ingredientId) {
 function sellIngredient(ingredientId) {
     if (confirm(`Sell ${ingredientIdToText(ingredientId)}?`)) {
         player.resetBag();
-
         player.sell(ingredientId);  // Calls the remove method in the Player class
         vib(50);
         updateUI();  // Update the UI after removal
@@ -382,6 +412,13 @@ function pickIngredient() {
 
 function pickSpecificIngredient(ingredientId) {
     const pickedIngredientId = player.drawSpecificIngredient(ingredientId);
+    if (pickedIngredientId === -1) return;
+    player.placeIngredientOnBoard(pickedIngredientId);
+    vib(50);
+    updateUI();
+}
+function pickSpecificIngredientFromSideboard(ingredientId) {
+    const pickedIngredientId = player.drawSpecificIngredientFromSideboard(ingredientId);
     if (pickedIngredientId === -1) return;
     player.placeIngredientOnBoard(pickedIngredientId);
     vib(50);
@@ -451,6 +488,7 @@ function resetBag() {
     if (confirm("Are you sure you want to reset the bag? All picked ingredients will be returned.")) {
         player.resetBoard();  // Reset the bag by putting all owned ingredients back
         player.resetBag();
+        player.resetSideboard();
         updateUI();  // Update the UI after resetting
 
         vib(150);
@@ -466,12 +504,16 @@ function updateUI() {
     insertBagIngredientList(document.getElementById('bag-ingredients'), player.bag);
     setGridDivStyling(document.getElementById('bag-ingredients'), player.getBagIngredientCount());
 
-    insertBoardIngredientList(document.getElementById('board-history'), player.board); //same as below but different due to difference between board and bag/inventory
-
+    
     insertInventoryIngredientList(document.getElementById('inventory-ingredients'), player.inventory);
     setGridDivStyling(document.getElementById('inventory-ingredients'), player.getInventoryIngredientCount());
-
+    
+    insertSideboardIngredientList(document.getElementById('sideboard'), player.sideboard);
+    setGridDivStyling(document.getElementById('sideboard'), player.getSideboardIngredientCount());
+    
+    insertBoardIngredientList(document.getElementById('board-history'), player.board); //same as below but different due to difference between board and bag/inventory
     setBoardHistoryScrollAmount(document.getElementById('board-history'));
+    console.log(player.sideboard)
 }
 
 
@@ -525,7 +567,8 @@ function insertBoardIngredientList(div, board) {
         ingredientDiv.style.width = `${historyHeight}px`;
         ingredientDiv.style.flex = 'none';
         ingredientDiv.addEventListener('click', function (event) {
-            removeFromBoardWrapper(boardId);
+            removeFromBoardAddToSideboardWrapper(boardId);
+            // removeFromBoardAddToBagWrapper(boardId);
         });
         div.append(ingredientDiv);
     });
@@ -536,6 +579,17 @@ function insertInventoryIngredientList(div, ingredientList) {
         const ingredientDiv = buildIngredientDiv(ingredientId);
         ingredientDiv.addEventListener('click', function (event) {
             sellIngredient(ingredientId);
+        });
+        div.append(ingredientDiv);
+    }});
+}
+
+function insertSideboardIngredientList(div, ingredientList) {
+    div.innerHTML = '';
+    Object.keys(ingredientList).forEach(ingredientId => {for (let i=0; i<ingredientList[ingredientId]; i++) {
+        const ingredientDiv = buildIngredientDiv(ingredientId);
+        ingredientDiv.addEventListener('click', function (event) {
+            pickSpecificIngredientFromSideboard(ingredientId);
         });
         div.append(ingredientDiv);
     }});
@@ -662,7 +716,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cauldronReset = document.getElementById('cauldronReset');
     const vibrationToggle = document.getElementById('settingsVibrationToggle');
     const drawMultipleToggle = document.getElementById('settingsDrawMultipleToggle');
-    const sideBoardToggle = document.getElementById('settingsSideBoardToggle');
+    const sideboardToggle = document.getElementById('settingsSideboardToggle');
 
     function closeValueOverlayFunc() {
         valueOverlay.style.display = 'none';
@@ -691,13 +745,13 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(drawMultipleSetting)
         }
     });
-    sideBoardToggle.addEventListener('change', function() {
-        const sideBoardDiv = document.getElementById('sideBoard');
+    sideboardToggle.addEventListener('change', function() {
+        const sideboardDiv = document.getElementById('sideboard');
         if (this.checked) {
-            sideBoardDiv.style.display = 'grid';
+            sideboardDiv.style.display = 'grid';
         }
         else {
-            sideBoardDiv.style.display = 'none';
+            sideboardDiv.style.display = 'none';
         }
     });
 

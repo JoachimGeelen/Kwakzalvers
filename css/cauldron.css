@@ -9,9 +9,9 @@
     background-color: rgb(27, 73, 110);
     overflow-y: hidden;
 }
-.cauldron__sideBoard {
+.cauldron__sideboard {
     flex: 2;
-    display:none;
+    display: grid;
     background-color: rgb(19, 30, 40);
     overflow-y: hidden;
 }
