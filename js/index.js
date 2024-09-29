@@ -452,7 +452,7 @@ function resetBag() {
         player.resetBag();
         updateUI();  // Update the UI after resetting
 
-        vib(300);
+        vib(200);
     }
 }
 
@@ -620,7 +620,6 @@ function addNavigationListeners() {
 
 function setBoardHistoryScrollAmount(div) {
     div.scrollLeft = 1000000;
-    console.log(div.scrollLeft);
 }
 
 function startingPosition() {
@@ -663,6 +662,13 @@ document.addEventListener('DOMContentLoaded', function () {
     valueOverlayClose.addEventListener('click', closeValueOverlayFunc);
     valueOverlay.addEventListener('click', closeValueOverlayFunc);
     cauldronReset.addEventListener('click', resetBag);
+
+    const input = document.getElementById('vibrationTest__input');
+    const button = document.getElementById('vibrationTest__button');
+    button.addEventListener('click', function () {
+        vib(input);
+        console.log("TRILLING   ", input.value)
+    });
 });
 
 
