@@ -2,7 +2,8 @@
     font-family: 'Berlin Sans FB Demi Bold';
     font-style: normal;
     font-weight: normal;
-    src: local('Berlin Sans FB Demi Bold'), url('BRLNSDB.woff') format('woff');
+    src: local('Berlin Sans FB Demi Bold'), url('BRLNSDB.woff') format('woff'), 
+                                            url('BRLNSDB.TTF') format('truetype');
 }
 
 
