@@ -667,7 +667,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const button = document.getElementById('vibrationTest__button');
     button.addEventListener('click', function () {
         vib(input);
-        console.log("TRILLING   ", input.value)
+        console.log("TRILLING   ", parseInt(input.value))
     });
 });
 
