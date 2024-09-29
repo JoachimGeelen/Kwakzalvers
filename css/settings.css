@@ -1,3 +1,7 @@
 .settings {
     background-color: rgb(76, 113, 73);
 }
+
+.button {
+    height: 50px;
+}
