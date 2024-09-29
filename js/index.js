@@ -330,16 +330,39 @@ function undoLastSelect() {
 
 // TODO maybe group these functions?
 function removeFromBoardAddToBagWrapper(boardId) {
-    if (confirm(`Remove ${ingredientIdToText(player.board[boardId])}?`)) {
-        player.removeFromBoardAddToBag(boardId);
-        updateUI();
-    }
+    player.removeFromBoardAddToBag(boardId);
+    updateUI();
 }
 function removeFromBoardAddToSideboardWrapper(boardId) {
-    if (confirm(`Remove ${ingredientIdToText(player.board[boardId])}?`)) {
-        player.removeFromBoardAddToSideboard(boardId);
-        updateUI();
-    }
+    player.removeFromBoardAddToSideboard(boardId);
+    updateUI();
+}
+
+function openRelocateOverlay(boardId) {
+    const relocateOverlay = document.getElementById('relocateOverlay');
+    relocateOverlay.style.display = 'flex';
+    const relocateMenu = document.getElementById('relocateMenu');
+    relocateMenu.innerHTML = '';
+
+    const relocateMenuToBagDiv = document.createElement("div");
+    relocateMenuToBagDiv.classList.add("cauldron__relocate-overlay__dialog__menu__item");
+    relocateMenuToBagDiv.addEventListener('click', () => {
+        removeFromBoardAddToBagWrapper(boardId);
+    });
+    relocateMenuToBagDiv.innerHTML = "Bag";
+    relocateMenu.appendChild(relocateMenuToBagDiv);
+
+    const relocateMenuToSideboardDiv = document.createElement("div");
+    relocateMenuToSideboardDiv.classList.add("cauldron__relocate-overlay__dialog__menu__item");
+    relocateMenuToSideboardDiv.addEventListener('click', () => {
+        removeFromBoardAddToSideboardWrapper(boardId);
+    });
+    relocateMenuToSideboardDiv.innerHTML = "Sideboard";
+    relocateMenu.appendChild(relocateMenuToSideboardDiv);
+
+    // const relocateMenuToBag = document.getElementById('relocateMenuToBag');
+    // const relocateMenuToSideboard = document.getElementById('relocateMenuToSideboard');
+
 }
 
 // Game logic (Player, Ingredient, Color) stays the same as before
@@ -483,6 +506,7 @@ function promptUserToSelectIngredientId(ingredientIds) {
 }
 
 
+
 // Function to reset the bag (put all owned ingredients back into the bag)
 function resetBag() {
     if (confirm("Are you sure you want to reset the bag? All picked ingredients will be returned.")) {
@@ -513,14 +537,13 @@ function updateUI() {
     
     insertBoardIngredientList(document.getElementById('board-history'), player.board); //same as below but different due to difference between board and bag/inventory
     setBoardHistoryScrollAmount(document.getElementById('board-history'));
-    console.log(player.sideboard)
 }
 
 
 function setGridDivStyling(gridDiv, itemCount, baseColumns = 4) {
     const containerWidth = gridDiv.clientWidth;
     const containerHeight = gridDiv.clientHeight;
-    if (!containerWidth || !containerHeight) return;
+    if (!containerWidth || !containerHeight || !itemCount) return;
 
     let columns = baseColumns;
     let rows = 1;
@@ -567,7 +590,8 @@ function insertBoardIngredientList(div, board) {
         ingredientDiv.style.width = `${historyHeight}px`;
         ingredientDiv.style.flex = 'none';
         ingredientDiv.addEventListener('click', function (event) {
-            removeFromBoardAddToSideboardWrapper(boardId);
+            openRelocateOverlay(boardId);
+            // removeFromBoardAddToSideboardWrapper(boardId);
             // removeFromBoardAddToBagWrapper(boardId);
         });
         div.append(ingredientDiv);
@@ -710,28 +734,50 @@ let drawMultipleSetting = true;
 document.addEventListener('DOMContentLoaded', function () {
     addNavigationListeners();
     generateBuyButtonDivs();
-    const drawSingleButton = document.getElementById('drawSingle');
-    const drawMultipleButton = document.getElementById('drawMultiple');
-    const valueOverlay = document.getElementById('valueOverlay');
-    const cauldronReset = document.getElementById('cauldronReset');
-    const vibrationToggle = document.getElementById('settingsVibrationToggle');
-    const drawMultipleToggle = document.getElementById('settingsDrawMultipleToggle');
-    const sideboardToggle = document.getElementById('settingsSideboardToggle');
 
-    function closeValueOverlayFunc() {
-        valueOverlay.style.display = 'none';
-    }
-    // function openValueOverlayFunc() {}
-    const valueOverlayClose = document.getElementById('valueOverlayClose');
+
+    const drawSingleButton = document.getElementById('drawSingle');
     drawSingleButton.addEventListener('click', pickIngredient);
+
+
+    const drawMultipleButton = document.getElementById('drawMultiple');
     drawMultipleButton.addEventListener('click', mydrawMultipleIngredients);
-    valueOverlayClose.addEventListener('click', closeValueOverlayFunc);
-    valueOverlay.addEventListener('click', closeValueOverlayFunc);
+
+
+    const cauldronReset = document.getElementById('cauldronReset');
     cauldronReset.addEventListener('click', resetBag);
+    
+
+    const valueOverlay = document.getElementById('valueOverlay');
+    const valueOverlayClose = document.getElementById('valueOverlayClose');
+    function closeValueOverlayFunc(event) {
+        if (event.target.id == 'valueOverlayButtons' || event.target.id == 'valueOverlayClose') {
+            valueOverlay.style.display = 'none';
+        }
+    }
+    valueOverlay.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
+    valueOverlayClose.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
+    
+
+    const relocateOverlay = document.getElementById('relocateOverlay');
+    const relocateOverlayClose = document.getElementById('relocateOverlayClose');
+    function closeRelocateOverlayFunc(event) {
+        // if (event.target.id == 'relocateOverlay' || event.target.id == 'relocateOverlayClose') {
+            // }
+        relocateOverlay.style.display = 'none';
+    }
+    relocateOverlay.addEventListener('click', (event) => {closeRelocateOverlayFunc(event);});
+    relocateOverlayClose.addEventListener('click', (event) => {closeRelocateOverlayFunc(event);});
+    
+    
+    const vibrationToggle = document.getElementById('settingsVibrationToggle');
     vibrationToggle.addEventListener('change', function() {
         if (this.checked) vibrationSetting = true;
         else vibrationSetting = false;
     });
+    
+
+    const drawMultipleToggle = document.getElementById('settingsDrawMultipleToggle');
     drawMultipleToggle.addEventListener('change', function() {
         const drawMultipleDiv = document.getElementById('drawMultiple');
         if (this.checked) {
@@ -745,6 +791,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(drawMultipleSetting)
         }
     });
+
+
+    const sideboardToggle = document.getElementById('settingsSideboardToggle');
     sideboardToggle.addEventListener('change', function() {
         const sideboardDiv = document.getElementById('sideboard');
         if (this.checked) {
@@ -754,14 +803,6 @@ document.addEventListener('DOMContentLoaded', function () {
             sideboardDiv.style.display = 'none';
         }
     });
-
-
-    // const input = document.getElementById('vibrationTest__input');
-    // const button = document.getElementById('vibrationTest__button');
-    // button.addEventListener('click', function () {
-    //     milis = parseInt(input.value);
-    //     console.log("TRILLING   ", milis)
-    // });
 });
 
 

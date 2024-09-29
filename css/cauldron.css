@@ -10,7 +10,7 @@
     overflow-y: hidden;
 }
 .cauldron__sideboard {
-    flex: 2;
+    flex: 1.2;
     display: grid;
     background-color: rgb(19, 30, 40);
     overflow-y: hidden;
@@ -83,4 +83,50 @@
 .cauldron__draw-menu__buttons__single {
     flex: 2;
     background-color: rgb(47, 132, 47);
+}
+
+.cauldron__relocate-overlay {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.cauldron__relocate-overlay__dialog {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 10px;
+    /* padding-top: 37px; */
+    /* justify-content: center; */
+    background-color: rgb(20, 28, 53);
+    position: relative
+}
+.cauldron__relocate-overlay__dialog__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+.cauldron__relocate-overlay__dialog__header__close {
+    position: relative;
+    top: -10px;
+    font-size:xx-large;
+}
+.cauldron__relocate-overlay__dialog__menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+.cauldron__relocate-overlay__dialog__menu__item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    background-color: blueviolet;
+    font-size: 25px;
+    padding:10px;
 }

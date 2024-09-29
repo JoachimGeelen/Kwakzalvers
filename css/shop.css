@@ -1,5 +1,6 @@
 .shop {
     background-color: rgb(192, 173, 53);
+    overflow: hidden;
 }
 .shop__inventory-ingredients {
     flex: 7;

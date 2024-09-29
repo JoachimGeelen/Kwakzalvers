@@ -65,8 +65,8 @@
 
 .cauldron, .shop, .settings{
     flex: auto;
-    margin: 5px;
-    padding: 10px;
+    /* margin: 5px; */
+    /* padding: 10px; */
     display: none;
     flex-direction: column;
     overflow-y: hidden;
