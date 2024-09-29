@@ -352,6 +352,9 @@ function openRelocateOverlay(boardId) {
     relocateMenuToBagDiv.innerHTML = "Bag";
     relocateMenu.appendChild(relocateMenuToBagDiv);
 
+    
+    if (!sideboardSetting) return;
+
     const relocateMenuToSideboardDiv = document.createElement("div");
     relocateMenuToSideboardDiv.classList.add("cauldron__relocate-overlay__dialog__menu__item");
     relocateMenuToSideboardDiv.addEventListener('click', () => {
@@ -722,11 +725,12 @@ function startingPosition() {
 
 
 
-
+// globals:
 const player = new Player();
 const allIngredients = createAllIngredients();
 let vibrationSetting = true;
 let drawMultipleSetting = true;
+let sideboardSetting = false;
 // let milis = 50;
 
 
@@ -781,13 +785,13 @@ document.addEventListener('DOMContentLoaded', function () {
     drawMultipleToggle.addEventListener('change', function() {
         const drawMultipleDiv = document.getElementById('drawMultiple');
         if (this.checked) {
-            drawMultipleDiv.style.display = 'flex';
             drawMultipleSetting = true;
+            drawMultipleDiv.style.display = 'flex';
             console.log(drawMultipleSetting)
         }
         else {
-            drawMultipleDiv.style.display = 'none';
             drawMultipleSetting = false;
+            drawMultipleDiv.style.display = 'none';
             console.log(drawMultipleSetting)
         }
     });
@@ -797,9 +801,11 @@ document.addEventListener('DOMContentLoaded', function () {
     sideboardToggle.addEventListener('change', function() {
         const sideboardDiv = document.getElementById('sideboard');
         if (this.checked) {
+            sideboardSetting = true;
             sideboardDiv.style.display = 'grid';
         }
         else {
+            sideboardSetting = false;
             sideboardDiv.style.display = 'none';
         }
     });
