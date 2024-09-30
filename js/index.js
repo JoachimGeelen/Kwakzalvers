@@ -831,6 +831,7 @@ function addDrawMultipleLEventListener() {
     multipleOverlayRange.oninput = function () {
         multipleOverlayNumber.value = parseInt(this.value);
         drawMultipleCount = parseInt(multipleOverlayRange.value);
+        vib(50);
     }
     multipleOverlayNumber.onclick = function () {
         this.value = "";
