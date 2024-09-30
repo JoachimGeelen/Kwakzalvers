@@ -33,7 +33,9 @@
 .olive {background-color: var(--8-ingredient);}
 
 
-
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 .wrapper, html, body {
     height: 100%;
     margin: 0;
