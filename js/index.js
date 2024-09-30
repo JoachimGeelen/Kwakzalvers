@@ -332,10 +332,12 @@ function undoLastSelect() {
 function removeFromBoardAddToBagWrapper(boardId) {
     player.removeFromBoardAddToBag(boardId);
     updateUI();
+    document.getElementById('relocateOverlay').style.display = 'none';
 }
 function removeFromBoardAddToSideboardWrapper(boardId) {
     player.removeFromBoardAddToSideboard(boardId);
     updateUI();
+    document.getElementById('relocateOverlay').style.display = 'none';
 }
 
 function openRelocateOverlay(boardId) {
@@ -352,7 +354,7 @@ function openRelocateOverlay(boardId) {
     relocateMenuToBagDiv.innerHTML = "Bag";
     relocateMenu.appendChild(relocateMenuToBagDiv);
 
-    
+
     if (!sideboardSetting) return;
 
     const relocateMenuToSideboardDiv = document.createElement("div");
@@ -512,19 +514,52 @@ function promptUserToSelectIngredientId(ingredientIds) {
 
 // Function to reset the bag (put all owned ingredients back into the bag)
 function resetBag() {
-    if (confirm("Are you sure you want to reset the bag? All picked ingredients will be returned.")) {
-        player.resetBoard();  // Reset the bag by putting all owned ingredients back
-        player.resetBag();
-        player.resetSideboard();
-        updateUI();  // Update the UI after resetting
+    player.resetBoard();  // Reset the bag by putting all owned ingredients back
+    player.resetBag();
+    player.resetSideboard();
+    updateUI();  // Update the UI after resetting
 
-        vib(150);
-    }
+    vib(150);
+    document.getElementById('resetOverlay').style.display = 'none';
+}
+function openResetOverlay() {
+    const resetOverlay = document.getElementById('resetOverlay');
+    resetOverlay.style.display = 'flex';
 }
 
 
 
+function initUI() {
+    const vibrationSettingElement = document.getElementById('settingsVibrationToggle');
+    if (vibrationSetting) {
+        vibrationSettingElement.checked = true;
+    }
+    else {
+        vibrationSettingElement.checked = false;
+    }
 
+
+    const drawMultipleSettingElement = document.getElementById('settingsDrawMultipleToggle');
+    if  (drawMultipleSetting) {
+        drawMultipleSettingElement.checked = true;
+        document.getElementById('drawMultiple').style.display ='flex';
+    }
+    else {
+        drawMultipleSettingElement.checked = false;
+        document.getElementById('drawMultiple').style.display ='none';
+    }
+
+
+    const sideboardSettingElement = document.getElementById('settingsSideboardToggle');
+    if  (sideboardSetting) {
+        sideboardSettingElement.checked = true;
+        document.getElementById('sideboard').style.display = 'grid';
+    }
+    else {
+        sideboardSettingElement.checked = false;
+        document.getElementById('sideboard').style.display = 'none';
+    }
+}
 // Function to update the UI
 function updateUI() {
     // player.logSanityCheck();
@@ -729,7 +764,7 @@ function startingPosition() {
 const player = new Player();
 const allIngredients = createAllIngredients();
 let vibrationSetting = true;
-let drawMultipleSetting = true;
+let drawMultipleSetting = false;
 let sideboardSetting = false;
 // let milis = 50;
 
@@ -749,8 +784,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     const cauldronReset = document.getElementById('cauldronReset');
-    cauldronReset.addEventListener('click', resetBag);
-    
+    cauldronReset.addEventListener('click', openResetOverlay);
+
+    const resetOk = document.getElementById('resetOk');
+    resetOk.addEventListener('click', resetBag);
+
+    const resetOverlay = document.getElementById('resetOverlay');
+    const resetCancel = document.getElementById('resetCancel');
+    function closeResetOverlayFunc(event) {
+        if (event.target.id == 'resetOverlay' || event.target.id == 'resetCancel') {
+            resetOverlay.style.display = 'none';
+        }
+    }
+    resetCancel.addEventListener('click', (event) => {closeResetOverlayFunc(event)});
+    resetOverlay.addEventListener('click', (event) => {closeResetOverlayFunc(event)});
 
     const valueOverlay = document.getElementById('valueOverlay');
     const valueOverlayClose = document.getElementById('valueOverlayClose');
@@ -766,9 +813,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const relocateOverlay = document.getElementById('relocateOverlay');
     const relocateOverlayClose = document.getElementById('relocateOverlayClose');
     function closeRelocateOverlayFunc(event) {
-        // if (event.target.id == 'relocateOverlay' || event.target.id == 'relocateOverlayClose') {
-            // }
-        relocateOverlay.style.display = 'none';
+        if (event.target.id == 'relocateOverlay' || event.target.id == 'relocateOverlayClose') {
+            relocateOverlay.style.display = 'none';
+        }
     }
     relocateOverlay.addEventListener('click', (event) => {closeRelocateOverlayFunc(event);});
     relocateOverlayClose.addEventListener('click', (event) => {closeRelocateOverlayFunc(event);});
@@ -814,6 +861,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+initUI();
 startingPosition()
 updateUI();  // Initial call to display empty states

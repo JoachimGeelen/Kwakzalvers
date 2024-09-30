@@ -85,7 +85,7 @@
     background-color: rgb(47, 132, 47);
 }
 
-.cauldron__relocate-overlay {
+.cauldron__relocate-overlay, .cauldron__reset-overlay {
     display: none;
     flex-direction: column;
     position: absolute;
@@ -95,26 +95,37 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
 }
-.cauldron__relocate-overlay__dialog {
+.cauldron__relocate-overlay__dialog, .cauldron__reset-overlay__dialog {
     display: flex;
     flex-direction: column;
     width: 80%;
     padding: 10px;
     /* padding-top: 37px; */
     /* justify-content: center; */
-    background-color: rgb(20, 28, 53);
     position: relative
 }
-.cauldron__relocate-overlay__dialog__header {
+.cauldron__relocate-overlay__dialog {
+    background-color: rgb(20, 28, 53);
+}
+.cauldron__reset-overlay__dialog {
+    background-color: rgb(40, 28, 53);
+}
+.cauldron__relocate-overlay__dialog__header, .cauldron__reset-overlay__dialog__header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding-bottom: 20px;
+}
+.cauldron__relocate-overlay__dialog__header {
+    justify-content: space-between;
+}
+.cauldron__reset-overlay__dialog__header {
+    justify-content: center;
 }
 .cauldron__relocate-overlay__dialog__header__close {
     position: relative;
     top: -10px;
     font-size:xx-large;
+    cursor: pointer;
 }
 .cauldron__relocate-overlay__dialog__menu {
     display: flex;
@@ -128,5 +139,26 @@
     justify-content: center;
     background-color: blueviolet;
     font-size: 25px;
-    padding:10px;
+    padding: 10px;
+    cursor: pointer;
+}
+.cauldron__reset-overlay__dialog__menu {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+} 
+
+.cauldron__reset-overlay__dialog__menu__item__ok, .cauldron__reset-overlay__dialog__menu__item__cancel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    padding: 10px;
+    cursor: pointer;
+}
+.cauldron__reset-overlay__dialog__menu__item__ok {
+    background-color: rgb(38, 196, 93);
+}
+.cauldron__reset-overlay__dialog__menu__item__cancel {
+    background-color: rgb(226, 43, 70);
 }
