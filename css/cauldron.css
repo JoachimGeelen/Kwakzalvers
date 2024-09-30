@@ -74,10 +74,10 @@
     display: flex;
     place-content: center;
     place-items: center;
+    cursor: pointer;
 }
 .cauldron__draw-menu__buttons__multiple {
     flex: 1;
-    display: flex;
     background-color: rgb(128, 33, 33) 
 }
 .cauldron__draw-menu__buttons__single {
@@ -85,7 +85,9 @@
     background-color: rgb(47, 132, 47);
 }
 
-.cauldron__relocate-overlay, .cauldron__reset-overlay {
+.cauldron__relocate-overlay,
+.cauldron__reset-overlay,
+.cauldron__multipleOverlay {
     display: none;
     flex-direction: column;
     position: absolute;
@@ -95,7 +97,9 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
 }
-.cauldron__relocate-overlay__dialog, .cauldron__reset-overlay__dialog {
+.cauldron__relocate-overlay__dialog,
+.cauldron__reset-overlay__dialog,
+.cauldron__multipleOverlay__dialog {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -110,7 +114,13 @@
 .cauldron__reset-overlay__dialog {
     background-color: rgb(40, 28, 53);
 }
-.cauldron__relocate-overlay__dialog__header, .cauldron__reset-overlay__dialog__header {
+.cauldron__multipleOverlay__dialog {
+    background-color: rgb(53, 28, 40);
+}
+
+.cauldron__relocate-overlay__dialog__header,
+.cauldron__reset-overlay__dialog__header,
+.cauldron__multipleOverlay__dialog__header {
     display: flex;
     align-items: center;
     padding-bottom: 20px;
@@ -118,7 +128,8 @@
 .cauldron__relocate-overlay__dialog__header {
     justify-content: space-between;
 }
-.cauldron__reset-overlay__dialog__header {
+.cauldron__reset-overlay__dialog__header,
+.cauldron__multipleOverlay__dialog__header {
     justify-content: center;
 }
 .cauldron__relocate-overlay__dialog__header__close {
@@ -147,8 +158,7 @@
     justify-content: space-evenly;
     gap: 10px;
 } 
-
-.cauldron__reset-overlay__dialog__menu__item__ok, .cauldron__reset-overlay__dialog__menu__item__cancel {
+.cauldron__reset-overlay__dialog__menu * {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -161,4 +171,64 @@
 }
 .cauldron__reset-overlay__dialog__menu__item__cancel {
     background-color: rgb(226, 43, 70);
+}
+
+.cauldron__multipleOverlay__dialog__content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cauldron__multipleOverlay__dialog__content__result {
+    display: grid;
+    aspect-ratio: 5 / 1;
+    background-color: rgb(37, 20, 28);
+}
+.cauldron__multipleOverlay__dialog__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cauldron__multipleOverlay__dialog__menu__top {
+    display: flex;
+}
+.cauldron__multipleOverlay__dialog__menu__numberWrapper {
+    flex: 1;
+}
+
+input:focus {outline:none;}
+.cauldron__multipleOverlay__dialog__menu__number {
+    margin: 0;
+    font-family:'Berlin Sans FB Demi Bold';
+    font-size: 25px;
+    text-align: center;
+    padding: 0;
+    border: 0;
+}
+.cauldron__multipleOverlay__dialog__menu__sliderWrapper {
+    flex: 5;
+}
+.cauldron__multipleOverlay__dialog__menu__slider {
+    width: 100%;
+    margin: 0;
+}
+.cauldron__multipleOverlay__dialog__menu__buttons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+.cauldron__multipleOverlay__dialog__menu__buttons * {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    padding: 10px;
+    cursor: pointer;
+}
+.cauldron__multipleOverlay__dialog__menu__buttons__cancel {
+    
+    background-color: rgb(226, 43, 70);
+}
+.cauldron__multipleOverlay__dialog__menu__buttons__ok {
+    background-color: rgb(38, 196, 93);
 }

@@ -445,6 +445,14 @@ function pickSpecificIngredient(ingredientId) {
     vib(50);
     updateUI();
 }
+function pickSpecificIngredientFromMultiple(ingredientId) {
+    const pickedIngredientId = player.drawSpecificIngredient(ingredientId);
+    if (pickedIngredientId === -1) return;
+    closeMultipleOverlay();
+    player.placeIngredientOnBoard(pickedIngredientId);
+    vib(50);
+    updateUI();
+}
 function pickSpecificIngredientFromSideboard(ingredientId) {
     const pickedIngredientId = player.drawSpecificIngredientFromSideboard(ingredientId);
     if (pickedIngredientId === -1) return;
@@ -456,21 +464,21 @@ function pickSpecificIngredientFromSideboard(ingredientId) {
 
 
 
-function mydrawMultipleIngredients() {
-    let size = 0;
-    for (const ingredient in player.bag) {
-        size += player.bag[ingredient];
-    }
+function mydrawMultipleIngredients(count) {
+    // let size = 0;
+    // for (const ingredient in player.bag) {
+    //     size += player.bag[ingredient];
+    // }
 
-    message = "Bag size: " + size
-    const answer = prompt(message, "1");
-    if (!answer) return;
-    const count = parseInt(answer);
-    if (isNaN(count) || count < 0 || count > size) {
-        alert("Invalid choice");
-        return;
-    }
-    if (count === 0) return;
+    // message = "Bag size: " + size
+    // const answer = prompt(message, "1");
+    // if (!answer) return;
+    // const count = parseInt(answer);
+    // if (isNaN(count) || count < 0 || count > size) {
+    //     alert("Invalid choice");
+    //     return;
+    // }
+    // if (count === 0) return;
 
     const randomIngredientIds = player.drawMultipleRandomIngredientIds(count);
     if (!randomIngredientIds) return; // bag was empty
@@ -526,6 +534,17 @@ function openResetOverlay() {
     const resetOverlay = document.getElementById('resetOverlay');
     resetOverlay.style.display = 'flex';
 }
+function openMultipleOverlay() {
+    const multipleOverlay = document.getElementById('multipleOverlay');
+    multipleOverlay.style.display = 'flex';
+    setMultipleInputsLimits(player.getBagIngredientCount());
+}
+function closeMultipleOverlay() {
+    const multipleOverlay = document.getElementById('multipleOverlay');
+    multipleOverlay.style.display = 'none';
+    const multipleOverlayResult = document.getElementById('multipleOverlayResult');
+    multipleOverlayResult.innerHTML = "";
+}
 
 
 
@@ -559,6 +578,17 @@ function initUI() {
         sideboardSettingElement.checked = false;
         document.getElementById('sideboard').style.display = 'none';
     }
+
+    const multipleOverlayRange = document.getElementById('multipleOverlayRange');
+    multipleOverlayRange.value = drawMultipleCount;
+    const multipleOverlayNumber = document.getElementById("multipleOverlayNumber");
+    multipleOverlayNumber.value = drawMultipleCount;
+}
+function setMultipleInputsLimits(max) {
+    const multipleOverlayRange = document.getElementById('multipleOverlayRange');
+    multipleOverlayRange.max = max;
+    const multipleOverlayNumber = document.getElementById("multipleOverlayNumber");
+    multipleOverlayNumber.max = max;
 }
 // Function to update the UI
 function updateUI() {
@@ -655,6 +685,18 @@ function insertSideboardIngredientList(div, ingredientList) {
         });
         div.append(ingredientDiv);
     }});
+}
+
+function insertMultipleIngredientList(div, ingredientIds) {
+    div.innerHTML = '';
+    ingredientIds.forEach((ingredientId) => {
+        const ingredientDiv = buildIngredientDiv(ingredientId);
+        ingredientDiv.addEventListener('click', function (event) {
+            pickSpecificIngredientFromMultiple(ingredientId);
+        });
+        div.append(ingredientDiv);
+    });
+
 }
 
 function buildIngredientDiv(ingredientId) {
@@ -764,31 +806,79 @@ function startingPosition() {
 const player = new Player();
 const allIngredients = createAllIngredients();
 let vibrationSetting = true;
-let drawMultipleSetting = false;
+let drawMultipleSetting = true;
 let sideboardSetting = false;
+
+let drawMultipleCount = 0;
 // let milis = 50;
 
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    addNavigationListeners();
-    generateBuyButtonDivs();
-
-
+function addDrawSingleLEventListener() {
     const drawSingleButton = document.getElementById('drawSingle');
     drawSingleButton.addEventListener('click', pickIngredient);
+}
 
 
+function addDrawMultipleLEventListener() {
+    // opening
     const drawMultipleButton = document.getElementById('drawMultiple');
-    drawMultipleButton.addEventListener('click', mydrawMultipleIngredients);
+    drawMultipleButton.addEventListener('click', openMultipleOverlay);
+
+    // function
+    //      input
+    const multipleOverlayRange = document.getElementById('multipleOverlayRange');
+    const multipleOverlayNumber = document.getElementById("multipleOverlayNumber");
+    multipleOverlayRange.oninput = function () {
+        multipleOverlayNumber.value = parseInt(this.value);
+        drawMultipleCount = parseInt(multipleOverlayRange.value);
+    }
+    multipleOverlayNumber.onclick = function () {
+        this.value = "";
+        drawMultipleCount = 1;
+    }
+    multipleOverlayNumber.oninput = function () {
+        if (isNaN(parseInt(this.value))) {
+            multipleOverlayRange.value = 1;
+        }
+        else {
+            multipleOverlayRange.value = parseInt(this.value);
+            drawMultipleCount = parseInt(this.value);
+        }
+    }
+    //      Drawing
+    const multipleOverlayOk = document.getElementById('multipleOverlayOk');
+    multipleOverlayOk.addEventListener('click', () => {
+        // mydrawMultipleIngredients(drawMultipleCount);
+        if (drawMultipleCount > player.getBagIngredientCount()) return;
+        const randomIngredientIds = player.drawMultipleRandomIngredientIds(drawMultipleCount);
+        const multipleOverlayResult = document.getElementById('multipleOverlayResult')
+        insertMultipleIngredientList(multipleOverlayResult, randomIngredientIds)
+        setGridDivStyling(multipleOverlayResult, drawMultipleCount);
+    });
+    
+    // closing
+    const multipleOverlay = document.getElementById('multipleOverlay');
+    const multipleOverlayCancel = document.getElementById('multipleOverlayCancel');
+    function closeMultipleOverlay(event) {
+        if (event.target.id == 'multipleOverlay' || event.target.id == 'multipleOverlayCancel') {
+            multipleOverlay.style.display = 'none';
+        }
+    }
+    multipleOverlay.addEventListener('click', (event) => {closeMultipleOverlay(event)});
+    multipleOverlayCancel.addEventListener('click', (event) => {closeMultipleOverlay(event)});
+
+    // drawMultipleButton.addEventListener('click', mydrawMultipleIngredients);
+}
 
 
+
+function addResetEventListener() {
     const cauldronReset = document.getElementById('cauldronReset');
     cauldronReset.addEventListener('click', openResetOverlay);
-
+    
     const resetOk = document.getElementById('resetOk');
     resetOk.addEventListener('click', resetBag);
-
+    
     const resetOverlay = document.getElementById('resetOverlay');
     const resetCancel = document.getElementById('resetCancel');
     function closeResetOverlayFunc(event) {
@@ -798,18 +888,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     resetCancel.addEventListener('click', (event) => {closeResetOverlayFunc(event)});
     resetOverlay.addEventListener('click', (event) => {closeResetOverlayFunc(event)});
-
-    const valueOverlay = document.getElementById('valueOverlay');
-    const valueOverlayClose = document.getElementById('valueOverlayClose');
-    function closeValueOverlayFunc(event) {
-        if (event.target.id == 'valueOverlayButtons' || event.target.id == 'valueOverlayClose') {
-            valueOverlay.style.display = 'none';
-        }
-    }
-    valueOverlay.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
-    valueOverlayClose.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
-    
-
+}
+function addRelocateListener() {
     const relocateOverlay = document.getElementById('relocateOverlay');
     const relocateOverlayClose = document.getElementById('relocateOverlayClose');
     function closeRelocateOverlayFunc(event) {
@@ -819,15 +899,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     relocateOverlay.addEventListener('click', (event) => {closeRelocateOverlayFunc(event);});
     relocateOverlayClose.addEventListener('click', (event) => {closeRelocateOverlayFunc(event);});
-    
-    
+}
+function addShopBuyEventListener() {
+    const valueOverlay = document.getElementById('valueOverlay');
+    const valueOverlayClose = document.getElementById('valueOverlayClose');
+    function closeValueOverlayFunc(event) {
+        if (event.target.id == 'valueOverlayButtons' || event.target.id == 'valueOverlayClose') {
+            valueOverlay.style.display = 'none';
+        }
+    }
+    valueOverlay.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
+    valueOverlayClose.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
+}
+function addSettingsListeners() {
     const vibrationToggle = document.getElementById('settingsVibrationToggle');
     vibrationToggle.addEventListener('change', function() {
         if (this.checked) vibrationSetting = true;
         else vibrationSetting = false;
     });
     
-
+    
     const drawMultipleToggle = document.getElementById('settingsDrawMultipleToggle');
     drawMultipleToggle.addEventListener('change', function() {
         const drawMultipleDiv = document.getElementById('drawMultiple');
@@ -842,8 +933,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(drawMultipleSetting)
         }
     });
-
-
+    
+    
     const sideboardToggle = document.getElementById('settingsSideboardToggle');
     sideboardToggle.addEventListener('change', function() {
         const sideboardDiv = document.getElementById('sideboard');
@@ -856,6 +947,25 @@ document.addEventListener('DOMContentLoaded', function () {
             sideboardDiv.style.display = 'none';
         }
     });
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // main
+    addNavigationListeners();
+    
+    // cauldron
+    addDrawSingleLEventListener();
+    addDrawMultipleLEventListener();
+    addResetEventListener();
+    addRelocateListener();
+    
+    // shop
+    generateBuyButtonDivs();
+    addShopBuyEventListener();
+
+    // settings
+    addSettingsListeners();
 });
 
 

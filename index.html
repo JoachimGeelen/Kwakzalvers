@@ -22,7 +22,7 @@
             <div class="cauldron__draw-menu">
                 <div class="cauldron__draw-menu__result" id="cauldronReset">Reset</div>
                 <div class="cauldron__draw-menu__buttons">
-                    <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Draw X</div>
+                    <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Draw M</div>
                     <div class="cauldron__draw-menu__buttons__single" id="drawSingle">Draw</div>
                 </div>
             </div>
@@ -44,6 +44,29 @@
                     <div class="cauldron__reset-overlay__dialog__menu" id="resetMenu">
                         <div class="cauldron__reset-overlay__dialog__menu__item__cancel" id="resetCancel">Cancel</div>
                         <div class="cauldron__reset-overlay__dialog__menu__item__ok" id="resetOk">Ok</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cauldron__multipleOverlay" id="multipleOverlay">
+                <div class="cauldron__multipleOverlay__dialog">
+                    <div class="cauldron__multipleOverlay__dialog__header">Draw multiple</div>
+                    <div class="cauldron__multipleOverlay__dialog__content" id="multipleOverlayContent">
+                        <div class="cauldron__multipleOverlay__dialog__content__result" id="multipleOverlayResult"></div>
+                        <div class="cauldron__multipleOverlay__dialog__menu">
+                            <div class="cauldron__multipleOverlay__dialog__menu__top">
+                                <div class="cauldron__multipleOverlay__dialog__menu__numberWrapper">
+                                    <input class="cauldron__multipleOverlay__dialog__menu__number" type="text" inputmode="numeric" placeholder="1" min="1" max="10" value="1" id="multipleOverlayNumber">
+                                    <!-- <input class="cauldron__multipleOverlay__dialog__menu__number" type="number" min="1" max="10" value="1" id="multipleOverlayNumber"> -->
+                                </div>
+                                <div class="cauldron__multipleOverlay__dialog__menu__sliderWrapper">
+                                    <input class="cauldron__multipleOverlay__dialog__menu__slider" type="range" min="1" max="10" value="1" id="multipleOverlayRange">
+                                </div>
+                            </div>
+                            <div class="cauldron__multipleOverlay__dialog__menu__buttons">
+                                <div class="cauldron__multipleOverlay__dialog__menu__buttons__cancel" id="multipleOverlayCancel">Cancel</div>
+                                <div class="cauldron__multipleOverlay__dialog__menu__buttons__ok" id="multipleOverlayOk">Draw</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
