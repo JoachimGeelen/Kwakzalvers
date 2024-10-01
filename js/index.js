@@ -315,7 +315,7 @@ class Player {
 
 function vib(milis) {
     if (!vibrationSetting) return; 
-    if (navigator.vibrate) {
+    if (navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate) {
         navigator.vibrate(milis);
     }
 }
@@ -420,12 +420,11 @@ function buyIngredient(ingredientId) {
 
 // Function to remove an ingredient
 function sellIngredient(ingredientId) {
-    if (confirm(`Sell ${ingredientIdToText(ingredientId)}?`)) {
-        player.resetBag();
-        player.sell(ingredientId);  // Calls the remove method in the Player class
-        vib(50);
-        updateUI();  // Update the UI after removal
-    }
+    closeSellOverlay();
+    player.resetBag();
+    player.sell(ingredientId);  // Calls the remove method in the Player class
+    vib(50);
+    updateUI();  // Update the UI after removal
 }
 
 
@@ -544,6 +543,26 @@ function closeMultipleOverlay() {
     multipleOverlay.style.display = 'none';
     const multipleOverlayResult = document.getElementById('multipleOverlayResult');
     multipleOverlayResult.innerHTML = "";
+    // reset global to allaw drawing multiple again
+    drawMultipleAvailable = true;
+    const multipleOverlayOk  = document.getElementById('multipleOverlayOk');
+    multipleOverlayOk.style.backgroundColor = '#118ddf';
+    multipleOverlayOk.style.color = '#ffffff';
+}
+function openSellOverlay(ingredientId) {
+    const sellOverlay = document.getElementById('sellOverlay');
+    sellOverlay.style.display = 'flex';
+    const sellOverlayOk = document.getElementById('sellOverlayOk');
+    // funky business to remove listeners, change to clean listeners with better scope and all
+    const newSellOverlayOk = sellOverlayOk.cloneNode(true);
+    sellOverlayOk.parentNode.replaceChild(newSellOverlayOk, sellOverlayOk);
+    newSellOverlayOk.addEventListener('click', () => {
+        sellIngredient(ingredientId);
+    });
+}
+function closeSellOverlay() {
+    const sellOverlay = document.getElementById('sellOverlay');
+    sellOverlay.style.display = 'none';
 }
 
 
@@ -670,7 +689,8 @@ function insertInventoryIngredientList(div, ingredientList) {
     Object.keys(ingredientList).forEach(ingredientId => {for (let i=0; i<ingredientList[ingredientId]; i++) {
         const ingredientDiv = buildIngredientDiv(ingredientId);
         ingredientDiv.addEventListener('click', function (event) {
-            sellIngredient(ingredientId);
+            // sellIngredient(ingredientId);
+            openSellOverlay(ingredientId);
         });
         div.append(ingredientDiv);
     }});
@@ -809,7 +829,8 @@ let vibrationSetting = true;
 let drawMultipleSetting = true;
 let sideboardSetting = false;
 
-let drawMultipleCount = 0;
+let drawMultipleCount = 1;
+let drawMultipleAvailable = true;
 // let milis = 50;
 
 
@@ -840,6 +861,7 @@ function addDrawMultipleLEventListener() {
     multipleOverlayNumber.oninput = function () {
         if (isNaN(parseInt(this.value))) {
             multipleOverlayRange.value = 1;
+            drawMultipleCount = 0;
         }
         else {
             multipleOverlayRange.value = parseInt(this.value);
@@ -850,7 +872,12 @@ function addDrawMultipleLEventListener() {
     const multipleOverlayOk = document.getElementById('multipleOverlayOk');
     multipleOverlayOk.addEventListener('click', () => {
         // mydrawMultipleIngredients(drawMultipleCount);
+        if (!drawMultipleAvailable) return; 
         if (drawMultipleCount > player.getBagIngredientCount()) return;
+        if (drawMultipleCount == 0) return;
+        drawMultipleAvailable = false;
+        multipleOverlayOk.style.backgroundColor = '#074772';
+        multipleOverlayOk.style.color = '#808080';
         const randomIngredientIds = player.drawMultipleRandomIngredientIds(drawMultipleCount);
         const multipleOverlayResult = document.getElementById('multipleOverlayResult')
         insertMultipleIngredientList(multipleOverlayResult, randomIngredientIds)
@@ -860,15 +887,13 @@ function addDrawMultipleLEventListener() {
     // closing
     const multipleOverlay = document.getElementById('multipleOverlay');
     const multipleOverlayCancel = document.getElementById('multipleOverlayCancel');
-    function closeMultipleOverlay(event) {
+    function closeMultipleOverlayWrapper(event) {
         if (event.target.id == 'multipleOverlay' || event.target.id == 'multipleOverlayCancel') {
-            multipleOverlay.style.display = 'none';
+            closeMultipleOverlay();
         }
     }
-    multipleOverlay.addEventListener('click', (event) => {closeMultipleOverlay(event)});
-    multipleOverlayCancel.addEventListener('click', (event) => {closeMultipleOverlay(event)});
-
-    // drawMultipleButton.addEventListener('click', mydrawMultipleIngredients);
+    multipleOverlay.addEventListener('click', (event) => {closeMultipleOverlayWrapper(event)});
+    multipleOverlayCancel.addEventListener('click', (event) => {closeMultipleOverlayWrapper(event)});
 }
 
 
@@ -912,6 +937,17 @@ function addShopBuyEventListener() {
     valueOverlay.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
     valueOverlayClose.addEventListener('click', (event) => {closeValueOverlayFunc(event)});
 }
+function addShopSellEventListener() {
+    const sellOverlay = document.getElementById('sellOverlay');
+    const sellOverlayClose = document.getElementById('sellOverlayCancel');
+    function closeSellOverlayFunc(event) {
+        if (event.target.id == 'sellOverlay' || event.target.id == 'sellOverlayCancel') {
+            sellOverlay.style.display = 'none';
+        }
+    }
+    sellOverlay.addEventListener('click', (event) => {closeSellOverlayFunc(event)});
+    sellOverlayClose.addEventListener('click', (event) => {closeSellOverlayFunc(event)});
+}
 function addSettingsListeners() {
     const vibrationToggle = document.getElementById('settingsVibrationToggle');
     vibrationToggle.addEventListener('change', function() {
@@ -926,12 +962,10 @@ function addSettingsListeners() {
         if (this.checked) {
             drawMultipleSetting = true;
             drawMultipleDiv.style.display = 'flex';
-            console.log(drawMultipleSetting)
         }
         else {
             drawMultipleSetting = false;
             drawMultipleDiv.style.display = 'none';
-            console.log(drawMultipleSetting)
         }
     });
     
@@ -964,6 +998,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // shop
     generateBuyButtonDivs();
     addShopBuyEventListener();
+    addShopSellEventListener();
 
     // settings
     addSettingsListeners();

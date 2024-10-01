@@ -20,10 +20,10 @@
             <div class="cauldron__sideboard" id="sideboard"></div>
             <div class="cauldron__board-history" id="board-history"></div>
             <div class="cauldron__draw-menu">
-                <div class="cauldron__draw-menu__result" id="cauldronReset">Reset</div>
+                <div class="cauldron__draw-menu__reset" id="cauldronReset">Reset</div>
                 <div class="cauldron__draw-menu__buttons">
-                    <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Draw M</div>
-                    <div class="cauldron__draw-menu__buttons__single" id="drawSingle">Draw</div>
+                    <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Many</div>
+                    <div class="cauldron__draw-menu__buttons__single" id="drawSingle">Random</div>
                 </div>
             </div>
             <div class="cauldron__relocate-overlay" id="relocateOverlay">
@@ -43,7 +43,7 @@
                     <div class="cauldron__reset-overlay__dialog__header">Reset cauldron?</div>
                     <div class="cauldron__reset-overlay__dialog__menu" id="resetMenu">
                         <div class="cauldron__reset-overlay__dialog__menu__item__cancel" id="resetCancel">Cancel</div>
-                        <div class="cauldron__reset-overlay__dialog__menu__item__ok" id="resetOk">Ok</div>
+                        <div class="cauldron__reset-overlay__dialog__menu__item__ok" id="resetOk">Reset</div>
                     </div>
                 </div>
             </div>
@@ -79,6 +79,15 @@
                     <div class="shop__front__value-overlay__buttons" id="valueOverlayButtons"></div>
                     <!-- <span class="shop__front__value-overlay__close" id="valueOverlayClose">&times;</span> -->
                     <span class="shop__front__value-overlay__close" id="valueOverlayClose">×</span>
+                </div>
+            </div>
+            <div class="shop__sellOverlay" id="sellOverlay">
+                <div class="shop__sellOverlay__dialog">
+                    <div class="shop__sellOverlay__dialog__header">Sell ingredient?</div>
+                    <div class="shop__sellOverlay__dialog__menu" id="sellOverlayMenu">
+                        <div class="shop__sellOverlay__dialog__menu__item__cancel" id="sellOverlayCancel">Cancel</div>
+                        <div class="shop__sellOverlay__dialog__menu__item__ok" id="sellOverlayOk">Sell</div>
+                    </div>
                 </div>
             </div>
         </div>

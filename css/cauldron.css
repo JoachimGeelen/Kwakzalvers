@@ -10,7 +10,7 @@
     overflow-y: hidden;
 }
 .cauldron__sideboard {
-    flex: 1.2;
+    flex: 1;
     display: grid;
     background-color: rgb(19, 30, 40);
     overflow-y: hidden;
@@ -33,7 +33,7 @@
     font-size: xx-large;
 }
 .cauldron__board-history {
-    flex: 1;
+    flex: 1.2;
     display: flex;
     background-color: rgb(53, 81, 104);
     overflow-x: scroll;
@@ -50,23 +50,26 @@
             drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
 }
 .cauldron__draw-menu {
-    flex: 1;
+    flex: 0.5;
     background-color: rgb(18, 64, 102);
     display: flex;
+    gap: 10px;
+    padding: 10px;
 }
-.cauldron__draw-menu__result {
+.cauldron__draw-menu__reset {
     /* width: 100px; */
     flex: 1;
     display: flex;
     cursor: pointer;
     place-content: center;
     place-items: center;
-    background-color: #527768;
+    background-color: rgb(17, 141, 223);
 }
 
 .cauldron__draw-menu__buttons {
     flex: 3;
     display: flex;
+    gap: 10px;
 }
 .cauldron__draw-menu__buttons * {
     /* width: 100%; */
@@ -78,11 +81,11 @@
 }
 .cauldron__draw-menu__buttons__multiple {
     flex: 1;
-    background-color: rgb(128, 33, 33) 
+    background-color: rgb(17, 141, 223);
 }
 .cauldron__draw-menu__buttons__single {
     flex: 2;
-    background-color: rgb(47, 132, 47);
+    background-color: rgb(17, 141, 223);
 }
 
 .cauldron__relocate-overlay,
@@ -227,8 +230,8 @@ input:focus {outline:none;}
 }
 .cauldron__multipleOverlay__dialog__menu__buttons__cancel {
     
-    background-color: rgb(226, 43, 70);
+    background-color: #e22b46;
 }
 .cauldron__multipleOverlay__dialog__menu__buttons__ok {
-    background-color: rgb(38, 196, 93);
+    background-color: #118ddf;
 }
