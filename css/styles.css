@@ -8,7 +8,8 @@
 
 
 :root {
-    --0-ingredient: rgb(209, 222, 222);
+    --0-ingredient: rgb(193, 210, 210);
+    /* --0-ingredient: rgb(209, 222, 222); */
     --1-ingredient: #7aa82c;
     --2-ingredient: hsl(204, 46%, 55%);
     --3-ingredient: #ce523c;
@@ -76,12 +77,12 @@
 
 
 .nav {
-    flex: 1.5;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 .nav__divider {
-    flex: 1;
+    flex: 0.1;
     background-color: #3b6363;
 }
 .nav__menu {

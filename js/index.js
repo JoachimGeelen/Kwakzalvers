@@ -11,14 +11,14 @@ const Color = {
 };
 const ColorById = new Map();
 ColorById.set(0, Color.WHITE);
+ColorById.set(5, Color.ORANGE);
+ColorById.set(8, Color.OLIVE);
+ColorById.set(6, Color.BLACK);
 ColorById.set(1, Color.GREEN);
+ColorById.set(7, Color.PURPLE);
 ColorById.set(2, Color.BLUE);
 ColorById.set(3, Color.RED);
 ColorById.set(4, Color.YELLOW);
-ColorById.set(5, Color.ORANGE);
-ColorById.set(6, Color.BLACK);
-ColorById.set(7, Color.PURPLE);
-ColorById.set(8, Color.OLIVE);
 
 const valuesByColorId = new Map();
 ColorById.forEach((color, colorId) => {
@@ -139,6 +139,7 @@ class Player {
 
     drawSpecificIngredient(ingredientId) {
         if (this.isEmpty(this.bag)) return -1;
+        if (this.bag[ingredientId] <= 0) return -1;
         this.bag[ingredientId]--;
         return ingredientId;
         // this.bag[ingredientId]--;
@@ -397,17 +398,21 @@ function generateBuyButtonDivs() {
     });
 }
 function showValueButtons(colorId) {
+    const valueOverlay = document.getElementById('valueOverlay');
+    valueOverlay.style.display = 'flex';
+
     const valueButtonsDiv = document.getElementById('valueOverlayButtons');
     valueButtonsDiv.innerHTML = '';
     valuesByColorId.get(colorId).forEach(value => {
         const valueButton = document.createElement('div');
         valueButton.textContent = value;
-        valueButton.onclick = () => buyIngredient(getIngredientId(colorId, value));
+        valueButton.onclick = () => {
+            buyIngredient(getIngredientId(colorId, value));
+            closeValueOverlay();
+        }
         valueButton.classList.add(ColorById.get(colorId), "shop__front__value-overlay__buttons__button");
         valueButtonsDiv.appendChild(valueButton);
     });
-    const valueOverlay = document.getElementById('valueOverlay');
-    valueOverlay.style.display = 'block';
 }
 
 
@@ -563,6 +568,10 @@ function openSellOverlay(ingredientId) {
 function closeSellOverlay() {
     const sellOverlay = document.getElementById('sellOverlay');
     sellOverlay.style.display = 'none';
+}
+function closeValueOverlay() {
+    const valueOverlay = document.getElementById('valueOverlay');
+    valueOverlay.style.display = 'none';
 }
 
 
@@ -930,8 +939,9 @@ function addShopBuyEventListener() {
     const valueOverlay = document.getElementById('valueOverlay');
     const valueOverlayClose = document.getElementById('valueOverlayClose');
     function closeValueOverlayFunc(event) {
-        if (event.target.id == 'valueOverlayButtons' || event.target.id == 'valueOverlayClose') {
-            valueOverlay.style.display = 'none';
+        if (event.target.id == 'valueOverlay' || event.target.id == 'valueOverlayClose') {
+            // valueOverlay.style.display = 'none';
+            closeValueOverlay();
         }
     }
     valueOverlay.addEventListener('click', (event) => {closeValueOverlayFunc(event)});

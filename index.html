@@ -29,7 +29,7 @@
             <div class="cauldron__relocate-overlay" id="relocateOverlay">
                 <div class="cauldron__relocate-overlay__dialog">
                     <div class="cauldron__relocate-overlay__dialog__header">
-                        <div>Move Item To?</div>
+                        <div>Move item to:</div>
                         <div class="cauldron__relocate-overlay__dialog__header__close" id="relocateOverlayClose">×</div>
                     </div>
                     <div class="cauldron__relocate-overlay__dialog__menu" id="relocateMenu">
@@ -74,11 +74,22 @@
         <div id="shop" class="shop">
             <div class="shop__inventory-ingredients" id="inventory-ingredients"></div>
             <div class="shop__front">
-                <div class="shop__front__buy-buttons" id="buy-buttons"></div>
+                <div class="shop__front__buy-buttons__wrapper">
+                    <div class="shop__front__buy-buttons" id="buy-buttons">
+                        <!-- <div class="shop__front__buy-buttons__button"></div> -->
+                    </div>
+                </div>
                 <div class="shop__front__value-overlay" id="valueOverlay">
-                    <div class="shop__front__value-overlay__buttons" id="valueOverlayButtons"></div>
-                    <!-- <span class="shop__front__value-overlay__close" id="valueOverlayClose">&times;</span> -->
-                    <span class="shop__front__value-overlay__close" id="valueOverlayClose">×</span>
+                    <div class="shop__front__value-overlay__dialog">
+                        <div class="shop__front__value-overlay__dialog__header">
+                            <div>Select ingredient value:</div>
+                            <div class="shop__front__value-overlay__dialog__header__close" id="valueOverlayClose">×</div>
+                        </div>
+                        <!-- <div class="shop__front__value-overlay__dialog__content"> -->
+                        <div class="shop__front__value-overlay__buttons" id="valueOverlayButtons"></div>
+                            <!-- <span class="shop__front__value-overlay__close" id="valueOverlayClose">&times;</span> -->
+                        <!-- </div> -->
+                    </div>
                 </div>
             </div>
             <div class="shop__sellOverlay" id="sellOverlay">
