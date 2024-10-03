@@ -19,9 +19,12 @@
     --7-ingredient: hsl(308, 32%, 55%);
     --8-ingredient: #527768;
     --mobile-nav-height: 15vh;
-    --highlight-color: yellow;
+    --highlight-color: rgb(136, 255, 175);
+    --outline-color: rgb(0, 0, 0);
     --hw: 2px;
     --hwn: -2px;
+    --hwb: 1px;
+    --hwbn: -1px;
 }
 .white {background-color: var(--0-ingredient);}
 .green {background-color: var(--1-ingredient);}
@@ -86,14 +89,14 @@
     background-color: #111616;
 } */
 .nav__menu {
-    background-color: #2f4f4f;
+    background-color: #192626;
     flex: 2;
     display: flex;
     flex-shrink: 0;
     justify-content: space-around;
 }
 .--active {
-    background-color: #3b6363;
+    background-color: #2b4242;
 }
 .nav-block, .nav-block__settings {
     display: flex;
@@ -108,11 +111,18 @@
     flex: 1;
 }
 
+.ingredient__outline-- {
+    -webkit-filter: drop-shadow(var(--hwb) var(--hwb) 0 var(--outline-color)) 
+                    drop-shadow(var(--hwbn) var(--hwb) 0 var(--outline-color))
+                    drop-shadow(var(--hwb) var(--hwbn) 0 var(--outline-color)) 
+                    drop-shadow(var(--hwbn) var(--hwbn) 0 var(--outline-color));
+    filter: drop-shadow(var(--hwb) var(--hwb) 0 var(--outline-color)) 
+            drop-shadow(var(--hwbn) var(--hwb) 0 var(--outline-color)) 
+            drop-shadow(var(--hwb) var(--hwbn) 0 var(--outline-color)) 
+            drop-shadow(var(--hwbn) var(--hwbn) 0 var(--outline-color))
+}
 
-.colorButton {
-    text-align: center;
-    align-content: center;
-    height: 5em;
-    width: 5em;
-    cursor: pointer;
+.ingredient__outline {
+    filter: 
+        drop-shadow(2px 2px 2px var(--outline-color));
 }

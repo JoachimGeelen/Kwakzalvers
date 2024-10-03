@@ -542,6 +542,11 @@ function openMultipleOverlay() {
     const multipleOverlay = document.getElementById('multipleOverlay');
     multipleOverlay.style.display = 'flex';
     setMultipleInputsLimits(player.getBagIngredientCount());
+    drawMultipleCount = Math.min(drawMultipleCount, player.getBagIngredientCount());
+    const multipleOverlayRange = document.getElementById('multipleOverlayRange');
+    multipleOverlayRange.value = drawMultipleCount;
+    const multipleOverlayNumber = document.getElementById("multipleOverlayNumber");
+    multipleOverlayNumber.value = drawMultipleCount;
 }
 function closeMultipleOverlay() {
     const multipleOverlay = document.getElementById('multipleOverlay');
@@ -607,10 +612,10 @@ function initUI() {
         document.getElementById('sideboard').style.display = 'none';
     }
 
-    const multipleOverlayRange = document.getElementById('multipleOverlayRange');
-    multipleOverlayRange.value = drawMultipleCount;
-    const multipleOverlayNumber = document.getElementById("multipleOverlayNumber");
-    multipleOverlayNumber.value = drawMultipleCount;
+    // const multipleOverlayRange = document.getElementById('multipleOverlayRange');
+    // multipleOverlayRange.value = drawMultipleCount;
+    // const multipleOverlayNumber = document.getElementById("multipleOverlayNumber");
+    // multipleOverlayNumber.value = drawMultipleCount;
 }
 function setMultipleInputsLimits(max) {
     const multipleOverlayRange = document.getElementById('multipleOverlayRange');
@@ -739,6 +744,7 @@ function buildIngredientDiv(ingredientId) {
     const color = ColorById.get(ingredient.color);
     // ingredientDiv.classList.add(color, "ingredient");
     ingredientDiv.classList.add("ingredient");
+    ingredientDiv.classList.add("ingredient__outline");
     ingredientDiv.style.backgroundImage = `url(${getImagePath(ingredient)})`;
     return ingredientDiv;
 }

@@ -1,5 +1,5 @@
 .settings {
-    background-color: rgb(76, 113, 73);
+    background-color: rgb(31, 44, 30);
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -13,12 +13,13 @@
     gap: 10px;
     padding: 10px;
     font-size: 30px;
+    background-color: #364e36;
 }
 .settings__menu__item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(41, 71, 41);
+    background-color: #3f903f;
     padding: 10px;
 }
 input {

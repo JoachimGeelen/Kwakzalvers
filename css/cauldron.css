@@ -39,15 +39,32 @@
     overflow-x: scroll;
     overflow-y: hidden;
 }
-.cauldron__board-history > div:last-child {
+.cauldron__board-history-- > div:last-child {
     -webkit-filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
                     drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color))
                     drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
                     drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
-    filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
-            drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color)) 
-            drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
-            drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color));
+    filter: 
+        /* drop-shadow(var(--hwb) var(--hwb) 0 var(--outline-color)) 
+        drop-shadow(var(--hwbn) var(--hwb) 0 var(--outline-color)) 
+        drop-shadow(var(--hwb) var(--hwbn) 0 var(--outline-color)) 
+        drop-shadow(var(--hwbn) var(--hwbn) 0 var(--outline-color)) */
+        drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
+        drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color)) 
+        drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
+        drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color))
+        drop-shadow(1px 1px 0 var(--outline-color)) 
+        drop-shadow(-1px -1px 0 var(--outline-color)) 
+        drop-shadow(1px -1px 0 var(--outline-color)) 
+        drop-shadow(-1px 1px 0 var(--outline-color));         
+}
+.cauldron__board-history > div:last-child {
+    filter: 
+        drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
+        drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color)) 
+        drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
+        drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color))
+        drop-shadow(2px 2px 2px var(--outline-color));
 }
 .cauldron__draw-menu {
     flex: 0.5;
