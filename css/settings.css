@@ -2,24 +2,34 @@
     background-color: rgb(76, 113, 73);
     display: none;
     flex-direction: column;
-    gap: 5px;
-    font-size: 30px;
+    justify-content: center;
 }
 /* .settings__vibration {
     display: flex;    
 } */
-.settings * {
+.settings__menu {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    font-size: 30px;
 }
-input{
+.settings__menu__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(41, 71, 41);
+    padding: 10px;
+}
+input {
     margin: 0;
-    margin-right: 13px;
     display: flex;
     height: 35px;  
     width: 35px;
 }
 
 
-.button {
+
+/* .button {
     height: 50px;
-}
+} */

@@ -81,10 +81,10 @@
     display: flex;
     flex-direction: column;
 }
-.nav__divider {
+/* .nav__divider {
     flex: 0.1;
-    background-color: #3b6363;
-}
+    background-color: #111616;
+} */
 .nav__menu {
     background-color: #2f4f4f;
     flex: 2;

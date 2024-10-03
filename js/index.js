@@ -13,12 +13,12 @@ const ColorById = new Map();
 ColorById.set(0, Color.WHITE);
 ColorById.set(5, Color.ORANGE);
 ColorById.set(8, Color.OLIVE);
-ColorById.set(6, Color.BLACK);
-ColorById.set(1, Color.GREEN);
-ColorById.set(7, Color.PURPLE);
 ColorById.set(2, Color.BLUE);
 ColorById.set(3, Color.RED);
 ColorById.set(4, Color.YELLOW);
+ColorById.set(6, Color.BLACK);
+ColorById.set(1, Color.GREEN);
+ColorById.set(7, Color.PURPLE);
 
 const valuesByColorId = new Map();
 ColorById.forEach((color, colorId) => {
