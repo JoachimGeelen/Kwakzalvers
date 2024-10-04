@@ -1,24 +1,24 @@
 const Color = {
     WHITE: 'white',
-    GREEN: 'green',
+    ORANGE: 'orange',
+    OLIVE: 'olive',
     BLUE: 'blue',
     RED: 'red',
     YELLOW: 'yellow',
-    ORANGE: 'orange',
     BLACK: 'black',
+    GREEN: 'green',
     PURPLE: 'purple',
-    OLIVE: 'olive',
 };
 const ColorById = new Map();
 ColorById.set(0, Color.WHITE);
-ColorById.set(5, Color.ORANGE);
-ColorById.set(8, Color.OLIVE);
-ColorById.set(2, Color.BLUE);
-ColorById.set(3, Color.RED);
-ColorById.set(4, Color.YELLOW);
+ColorById.set(1, Color.ORANGE);
+ColorById.set(2, Color.OLIVE);
+ColorById.set(3, Color.BLUE);
+ColorById.set(4, Color.RED);
+ColorById.set(5, Color.YELLOW);
 ColorById.set(6, Color.BLACK);
-ColorById.set(1, Color.GREEN);
-ColorById.set(7, Color.PURPLE);
+ColorById.set(7, Color.GREEN);
+ColorById.set(8, Color.PURPLE);
 
 const valuesByColorId = new Map();
 ColorById.forEach((color, colorId) => {
@@ -85,7 +85,6 @@ class Player {
             this.bag[id] = 0;
         }
         this.bag[id] += quantity;
-        // this.resetBag();
     }
 
     sell(id) {
@@ -94,22 +93,47 @@ class Player {
             if (this.inventory[id] === 0) {
                 delete this.inventory[id];  // Remove key if count reaches 0
             }
-            this.resetBag();
-            return;
+            if (this.bag[id] > 0) {
+                this.bag[id] -= 1;
+                if (this.bag[id] === 0) {
+                    delete this.bag[id];  // Remove key if count reaches 0
+                }
+                return;
+            }
+            if (this.sideboard[id] > 0) {
+                this.sideboard[id] -= 1;
+                if (this.sideboard[id] === 0) {
+                    delete this.sideboard[id];  // Remove key if count reaches 0
+                }
+                return;
+            }
+            const boardIndex = this.board.indexOf(id);
+            if (boardIndex > -1) {
+                this.board.splice(boardIndex, 1);
+                return;
+            }
+            throw new Error("Attempting to sell an ingredient that is not in: bag, sideboard, or board");
         }
-        throw new Error("Attempting to sell an ingredient tha tis not owned!")
+        throw new Error("Attempting to sell an ingredient that is not owned!");
     }
-
-    resetBoard() {
+    resetBoard2() {
+        this.board.forEach(id => {
+            this.bag[id]++;
+        });
         this.board = [];
     }
-
-    resetBag() {
-        this.bag = { ...this.inventory };  // Reset bag to match owned ingredients
+    resetSideboard2() {
+        Object.keys(this.sideboard).forEach(id => {
+            this.bag[id] += this.sideboard[id];
+            this.sideboard[id] = 0;
+        });
     }
 
-    resetSideboard() {
+    fullReset() {
+        this.inventory = {};
+        this.bag = {};
         this.sideboard = {};
+        this.board = [];
     }
 
     isEmpty(ingredientList) {
@@ -426,7 +450,7 @@ function buyIngredient(ingredientId) {
 // Function to remove an ingredient
 function sellIngredient(ingredientId) {
     closeSellOverlay();
-    player.resetBag();
+    // player.resetBag();
     player.sell(ingredientId);  // Calls the remove method in the Player class
     vib(50);
     updateUI();  // Update the UI after removal
@@ -526,13 +550,19 @@ function promptUserToSelectIngredientId(ingredientIds) {
 
 // Function to reset the bag (put all owned ingredients back into the bag)
 function resetBag() {
-    player.resetBoard();  // Reset the bag by putting all owned ingredients back
-    player.resetBag();
-    player.resetSideboard();
+    player.resetBoard2();  // Reset the bag by putting all owned ingredients back
+    player.resetSideboard2();
+    // player.resetBag();
+    // player.resetSideboard();
     updateUI();  // Update the UI after resetting
 
     vib(150);
     document.getElementById('resetOverlay').style.display = 'none';
+}
+function fullReset() {
+    player.fullReset();
+    updateUI();
+    vib(50, 150);
 }
 function openResetOverlay() {
     const resetOverlay = document.getElementById('resetOverlay');
@@ -577,6 +607,14 @@ function closeSellOverlay() {
 function closeValueOverlay() {
     const valueOverlay = document.getElementById('valueOverlay');
     valueOverlay.style.display = 'none';
+}
+function openNewGameOverlay() {
+    const newGameOverlay = document.getElementById('newGameOverlay');
+    newGameOverlay.style.display = 'flex';
+}
+function closeNewGameOverlay() {
+    const newGameOverlay = document.getElementById('newGameOverlay');
+    newGameOverlay.style.display = 'none';
 }
 
 
@@ -762,79 +800,15 @@ function getImagePath(ingredient) {
 
 
 
-function addNavigationListeners() {
-    // UI STUFF
-    // Get references to the divs
-    const cauldronDiv = document.getElementById('cauldron');
-    const shopDiv = document.getElementById('shop');
-    const settingsDiv = document.getElementById('settings');
-    
-    // Get references to the navigation links
-    const viewCookingLink = document.getElementById('viewCauldron');
-    const viewShopLink = document.getElementById('viewShop');
-    const valueOverlay = document.getElementById('valueOverlay');
-    const viewSettingsLink = document.getElementById('viewSettings')
-
-    const divs = [cauldronDiv, shopDiv, settingsDiv];
-    const menuDivs = [viewCookingLink, viewShopLink, viewSettingsLink]
-
-    function deactivateAll() {
-        divs.forEach(div => {
-            div.style.display = 'none';
-        });
-        menuDivs.forEach(div => {
-            div.classList.remove('--active');
-        });
-    }
-
-    // Add event listeners to toggle visibility
-    viewCookingLink.addEventListener('click', function(event) {
-        // event.preventDefault();
-        deactivateAll();
-        cauldronDiv.style.display = 'flex';
-        this.classList.add('--active');
-        updateUI();
-    });
-    
-    viewShopLink.addEventListener('click', function(event) {
-        // event.preventDefault();
-        deactivateAll();
-        shopDiv.style.display = 'flex';
-        this.classList.add('--active');
-        updateUI();
-    });
-    viewSettingsLink.addEventListener('click', function(event) {
-        // event.preventDefault();
-        deactivateAll()
-        settingsDiv.style.display = 'flex';
-        this.classList.add('--active');
-        updateUI();
-    });
-}
-
-function setBoardHistoryScrollAmount(div) {
-    div.scrollLeft = 1000000;
-}
-
 function startingPosition() {
+    player.fullReset();
     player.purchase(1, 4);
     player.purchase(2, 2);
     player.purchase(3);
     player.purchase(11);
-    player.purchase(51);
-    // player.purchase(21, 4);
-    // player.purchase(32, 2);
-    // player.purchase(44, 1);
-    // player.purchase(24, 26);
-    // player.purchase(81);
-    player.resetBag();
+    player.purchase(71);
+    updateUI();
 }
-
-
-
-
-
-
 
 
 // globals:
@@ -847,6 +821,69 @@ let sideboardSetting = false;
 let drawMultipleCount = 1;
 let drawMultipleAvailable = true;
 // let milis = 50;
+
+
+
+function navDeactivateAllContent() {
+    const cauldronDiv = document.getElementById('cauldron');
+    const shopDiv = document.getElementById('shop');
+    const settingsDiv = document.getElementById('settings');
+    const divs = [cauldronDiv, shopDiv, settingsDiv];
+
+    const viewCauldronLink = document.getElementById('viewCauldron');
+    const viewShopLink = document.getElementById('viewShop');
+    const viewSettingsLink = document.getElementById('viewSettings')
+    const menuDivs = [viewCauldronLink, viewShopLink, viewSettingsLink]
+
+    divs.forEach(div => {
+        div.style.display = 'none';
+    });
+    menuDivs.forEach(div => {
+        div.classList.remove('--active');
+    });
+}
+function navActivateThisContent(contentDiv, navDiv) {
+    contentDiv.style.display = 'flex';
+    navDiv.classList.add('--active');
+}
+
+function navToCauldron() {
+    navDeactivateAllContent();
+    const cauldronDiv = document.getElementById('cauldron');
+    const viewCauldronLink = document.getElementById('viewCauldron');
+    navActivateThisContent(cauldronDiv, viewCauldronLink);
+    updateUI();
+}
+function navToShop() {
+    navDeactivateAllContent();
+    const shopDiv = document.getElementById('shop');
+    const viewShopLink = document.getElementById('viewShop');
+    navActivateThisContent(shopDiv, viewShopLink);
+    updateUI();
+}
+function navToSettings() {
+    navDeactivateAllContent();
+    const settingsDiv = document.getElementById('settings');
+    const viewSettingsLink = document.getElementById('viewSettings');
+    navActivateThisContent(settingsDiv, viewSettingsLink);
+    updateUI();
+}
+
+
+function addNavigationListeners() {
+    const viewCauldronLink = document.getElementById('viewCauldron');
+    const viewShopLink = document.getElementById('viewShop');
+    const viewSettingsLink = document.getElementById('viewSettings');
+
+    viewCauldronLink.addEventListener('click', navToCauldron);
+    viewShopLink.addEventListener('click', navToShop);
+    viewSettingsLink.addEventListener('click', navToSettings);
+
+}
+
+function setBoardHistoryScrollAmount(div) {
+    div.scrollLeft = 1000000;
+}
 
 
 function addDrawSingleLEventListener() {
@@ -998,7 +1035,34 @@ function addSettingsListeners() {
             sideboardDiv.style.display = 'none';
         }
     });
+
+
+    const newGameButton = document.getElementById('newGameButton');
+    const newGameOverlay = document.getElementById('newGameOverlay');
+    const newGameOk = document.getElementById('newGameOk');
+    const newGameCancel = document.getElementById('newGameCancel');
+    
+    newGameButton.addEventListener('click', function() {
+        openNewGameOverlay();
+    });
+    newGameOk.addEventListener('click', function() {
+        startingPosition();
+        closeNewGameOverlay();
+        navToCauldron();
+    });
+    function closeNewGameOverlayWrapper(event) {
+        if (event.target.id == 'newGameOverlay' || event.target.id == 'newGameCancel') {
+            closeNewGameOverlay();
+        }
+    }
+    newGameOverlay.addEventListener('click', (event) => {closeNewGameOverlayWrapper(event)});
+    newGameCancel.addEventListener('click', (event) => {closeNewGameOverlayWrapper(event)});
 }
+
+
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -1024,5 +1088,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 initUI();
-startingPosition()
-updateUI();  // Initial call to display empty states
+startingPosition();
+// updateUI();  // Initial call to display empty states

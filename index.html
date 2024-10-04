@@ -109,12 +109,24 @@
                     <input type="checkbox" id="settingsVibrationToggle" />
                 </div>
                 <div class="settings__menu__item settings__multiple">
-                    <label for="settingsMultipleToggle">Draw Multiple</label>
+                    <label for="settingsDrawMultipleToggle">Draw Multiple</label>
                     <input type="checkbox" id="settingsDrawMultipleToggle" />
                 </div>
                 <div class="settings__menu__item settings__sideboard">
                     <label for="settingsSideboardToggle">Side Board</label>
                     <input type="checkbox" id="settingsSideboardToggle" />
+                </div>
+                <div class="settings__menu__item settings__menu__item_button settings__newGame">
+                    <button class="settings__newGame__button" id="newGameButton">New game</button>
+                </div>
+            </div>
+            <div class="settings__newGameOverlay" id="newGameOverlay">
+                <div class="settings__newGameOverlay__dialog">
+                    <div class="settings__newGameOverlay__dialog__header">Start new game?</div>
+                    <div class="settings__newGameOverlay__dialog__menu" id="newGameMenu">
+                        <div class="settings__newGameOverlay__dialog__menu__item__cancel" id="newGameCancel">Cancel</div>
+                        <div class="settings__newGameOverlay__dialog__menu__item__ok" id="newGameOk">New</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,7 +134,7 @@
     <div class="nav">
         <div class="nav__divider" id="navDivider"></div>
         <nav class="nav__menu">
-            <a class="nav-block__settings" id="viewSettings">Settings</a>
+            <a class="nav-block__settings" id="viewSettings">Menu</a>
             <a class="nav-block --active" id="viewCauldron" >Cauldron</a>
             <a class="nav-block" id="viewShop">Shop</a>
         </nav>
