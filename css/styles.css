@@ -26,15 +26,25 @@
     --hwb: 1px;
     --hwbn: -1px;
 }
-.white {background-color: var(--0-ingredient);}
-.green {background-color: var(--1-ingredient);}
-.blue {background-color: var(--2-ingredient);}
-.red {background-color: var(--3-ingredient);}
-.yellow {background-color: var(--4-ingredient);}
-.orange {background-color: var(--5-ingredient);}
-.black {background-color: var(--6-ingredient);}
-.purple {background-color: var(--7-ingredient);}
-.olive {background-color: var(--8-ingredient);}
+.white-bg {background-color: var(--0-ingredient);}
+.green-bg {background-color: var(--1-ingredient);}
+.blue-bg {background-color: var(--2-ingredient);}
+.red-bg {background-color: var(--3-ingredient);}
+.yellow-bg {background-color: var(--4-ingredient);}
+.orange-bg {background-color: var(--5-ingredient);}
+.black-bg {background-color: var(--6-ingredient);}
+.purple-bg {background-color: var(--7-ingredient);}
+.olive-bg {background-color: var(--8-ingredient);}
+
+.white-text {color: var(--0-ingredient);}
+.green-text {color: var(--1-ingredient);}
+.blue-text {color: var(--2-ingredient);}
+.red-text {color: var(--3-ingredient);}
+.yellow-text {color: var(--4-ingredient);}
+.orange-text {color: var(--5-ingredient);}
+.black-text {color: var(--6-ingredient);}
+.purple-text {color: var(--7-ingredient);}
+.olive-text {color: var(--8-ingredient);}
 
 
 * {

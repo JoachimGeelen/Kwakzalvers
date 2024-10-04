@@ -28,6 +28,8 @@ ColorById.forEach((color, colorId) => {
         values = [1, 2, 4];
     } else if (color === Color.OLIVE) {
         values = [0];
+    } else if (color === Color.ORANGE) {
+        values = [1, 6];
     } else {
         values = [1];
     }
@@ -416,7 +418,7 @@ function generateBuyButtonDivs() {
         const colorButton = document.createElement('div');
         colorButton.textContent = color;
         colorButton.onclick = () => showValueButtons(colorId);
-        colorButton.classList.add(color, "shop__front__buy-buttons__button");
+        colorButton.classList.add(`${color}-bg`, "shop__front__buy-buttons__button");
 
         colorButtonsDiv.appendChild(colorButton);
     });
@@ -434,7 +436,7 @@ function showValueButtons(colorId) {
             buyIngredient(getIngredientId(colorId, value));
             closeValueOverlay();
         }
-        valueButton.classList.add(ColorById.get(colorId), "shop__front__value-overlay__buttons__button");
+        valueButton.classList.add(`${ColorById.get(colorId)}-bg`, "shop__front__value-overlay__buttons__button");
         valueButtonsDiv.appendChild(valueButton);
     });
 }
@@ -779,11 +781,13 @@ function buildIngredientDiv(ingredientId) {
     // ingredientDiv.append(img);
 
     // ingredientDiv.innerHTML = ingredient.value;
-    const color = ColorById.get(ingredient.color);
-    // ingredientDiv.classList.add(color, "ingredient");
     ingredientDiv.classList.add("ingredient");
     ingredientDiv.classList.add("ingredient__outline");
+
+    // const color = ColorById.get(ingredient.color);
+    // ingredientDiv.classList.add(`${color}-bg`, "ingredient");
     ingredientDiv.style.backgroundImage = `url(${getImagePath(ingredient)})`;
+
     return ingredientDiv;
 }
 
@@ -1047,6 +1051,7 @@ function addSettingsListeners() {
     });
     newGameOk.addEventListener('click', function() {
         startingPosition();
+        vib(50, 150)
         closeNewGameOverlay();
         navToCauldron();
     });
