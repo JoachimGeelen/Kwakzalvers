@@ -694,7 +694,7 @@ function updateUI() {
 }
 
 
-function setGridDivStyling(gridDiv, itemCount, baseColumns = 5) {
+function setGridDivStyling(gridDiv, itemCount, baseColumns = 4) {
     const containerWidth = gridDiv.clientWidth;
     const containerHeight = gridDiv.clientHeight;
     if (!containerWidth || !containerHeight || !itemCount) return;
