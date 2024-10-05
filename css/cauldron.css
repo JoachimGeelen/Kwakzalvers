@@ -1,18 +1,90 @@
 .cauldron {
     display: flex;
-    background-color: rgb(69, 113, 163);
+    background-color: #000000;
+    position: relative;
+    justify-content: space-between;
+}
+
+.cauldron__top {
+    /* flex: 5; */
+    height: 70%;
     position: relative;
 }
-.cauldron__bag-ingredients {
-    flex: 5;
-    display: grid;
-    background-color: rgb(27, 73, 110);
-    overflow-y: hidden;
+
+.cauldron__bottom {
+    height: 30%;
+    position: relative;
+    /* justify-content: flex-end; */
 }
-.cauldron__sideboard {
+.cauldron__content__wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.cauldron__bagIngredients__wrapper {
+    height: 100%;
+    /* flex: 4; */
+    background-color: #192635;
+}
+.cauldron__sideboard__wrapper {
+    height: 30%;
+    /* flex: 1.5; */
+    background-color: #0d151b;
+    /* min-height: 100px; */
+}
+.cauldron__boardHistory__wrapper {
+    /* flex: 1; */
+    /* height: 100px; */
+    /* max-height: 135px; */
+    /* height: 100px; */
+    height: 75%;
+    background-color: #1c3f34;
+}
+.cauldron__draw-menu {
+    /* flex: 0.5; */
+    /* height: 45px; */
+    height: 25%;
+    background-color: #124066;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+
+.cauldron__content__wrapper__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cauldron__content__wrapper__header__title {
+    padding-block: 5px;
+    padding-inline: 80px;
+    margin-top: 5px;
+}
+.cauldron__bagIngredients__wrapper__header__title {
+    background-color: #28405c;
+}
+.cauldron__sideboard__wrapper__header__title {
+    background-color: #131e28;
+}
+/* .cauldron__boardHistory__wrapper__header__title {
+    background-color: #2b6050;
+} */
+.cauldron__bagIngredients {
+    /* flex: auto; */
     flex: 1;
     display: grid;
-    background-color: rgb(19, 30, 40);
+    background-color: #28405c;
+    overflow-y: hidden;
+}
+
+
+
+
+.cauldron__sideboard {
+    flex: auto;
+    display: grid;
+    background-color: #131e28;
     overflow-y: hidden;
 }
 .ingredient {
@@ -21,9 +93,7 @@
     cursor: pointer;
     background-size: 100% 100%;
 }
-.cauldron__reset, .cauldron__board-history, .cauldron__draw-menu {
-    flex-shrink: 0;
-}
+
 .cauldron__reset {
     position: absolute;
     bottom: -5px;
@@ -32,14 +102,32 @@
     color: white;
     font-size: xx-large;
 }
-.cauldron__board-history {
-    flex: 1.2;
+
+.cauldron__boardHistory, 
+.cauldron__bagIngredients,
+.cauldron__sideboard {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.cauldron__boardHistory {
+    flex: auto;
     display: flex;
-    background-color: rgb(53, 81, 104);
+    align-items: center;
+    /* background-color: #355168; */
+    background-color: #275647;
+    height: 65px;
+
+
     overflow-x: scroll;
     overflow-y: hidden;
+    /* filter: drop-shadow(2px 2px 2px var(--outline-color)); */
+    /* box-shadow: inset 0px 0px 5px var(--outline-color); */
 }
-.cauldron__board-history-- > div:last-child {
+
+
+.cauldron__boardHistory-- > div:last-child {
     -webkit-filter: drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
                     drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color))
                     drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
@@ -58,7 +146,7 @@
         drop-shadow(1px -1px 0 var(--outline-color)) 
         drop-shadow(-1px 1px 0 var(--outline-color));         
 }
-.cauldron__board-history > div:last-child {
+.cauldron__boardHistory > div:last-child {
     filter: 
         drop-shadow(var(--hw) var(--hw) 0 var(--highlight-color)) 
         drop-shadow(var(--hwn) var(--hw) 0 var(--highlight-color)) 
@@ -66,13 +154,7 @@
         drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color))
         drop-shadow(2px 2px 2px var(--outline-color));
 }
-.cauldron__draw-menu {
-    flex: 0.5;
-    background-color: rgb(18, 64, 102);
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-}
+
 .cauldron__draw-menu__reset {
     /* width: 100px; */
     flex: 1;

@@ -15,15 +15,33 @@
 <body class="wrapper">
     <div class="content">
         <div class="cauldron" id="cauldron">
-            <div class="cauldron__bag-ingredients" id="bag-ingredients"></div>
-            <!-- <span class="cauldron__reset" id="cauldronReset">↺</span> -->
-            <div class="cauldron__sideboard" id="sideboard"></div>
-            <div class="cauldron__board-history" id="board-history"></div>
-            <div class="cauldron__draw-menu">
-                <div class="cauldron__draw-menu__reset" id="cauldronReset">Reset</div>
-                <div class="cauldron__draw-menu__buttons">
-                    <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Many</div>
-                    <div class="cauldron__draw-menu__buttons__single" id="drawSingle">Random</div>
+            <div class="cauldron__content__wrapper cauldron__top">
+                <div class="cauldron__content__wrapper cauldron__bagIngredients__wrapper" id="bagWrapper">
+                    <div class="cauldron__content__wrapper__header cauldron__bagIngredients__wrapper__header">
+                        <div class="cauldron__content__wrapper__header__title cauldron__bagIngredients__wrapper__header__title">Bag</div>
+                    </div>
+                    <div class="cauldron__bagIngredients" id="bagIngredients"></div>
+                </div>
+                <div class="cauldron__content__wrapper cauldron__sideboard__wrapper" id="sideboardWrapper">
+                    <div class="cauldron__content__wrapper__header cauldron__sideboard__wrapper__header">
+                        <div class="cauldron__content__wrapper__header__title cauldron__sideboard__wrapper__header__title">Side</div>
+                    </div>
+                    <div class="cauldron__sideboard" id="sideboard"></div>
+                </div>
+            </div>
+            <div class="cauldron__content__wrapper cauldron__bottom">
+                <div class="cauldron__content__wrapper cauldron__boardHistory__wrapper">
+                    <div class="cauldron__content__wrapper__header cauldron__boardHistory__wrapper__header">
+                        <div class="cauldron__content__wrapper__header__title cauldron__boardHistory__wrapper__header__title">Cauldron</div>
+                    </div>
+                    <div class="cauldron__boardHistory" id="boardHistory"></div>
+                </div>
+                <div class="cauldron__draw-menu">
+                    <div class="cauldron__draw-menu__reset" id="cauldronReset">Reset</div>
+                    <div class="cauldron__draw-menu__buttons">
+                        <div class="cauldron__draw-menu__buttons__multiple" id="drawMultiple">Many</div>
+                        <div class="cauldron__draw-menu__buttons__single" id="drawSingle">Random</div>
+                    </div>
                 </div>
             </div>
             <div class="cauldron__relocate-overlay" id="relocateOverlay">
@@ -72,23 +90,33 @@
             </div>
         </div>
         <div id="shop" class="shop">
-            <div class="shop__inventory-ingredients" id="inventory-ingredients"></div>
-            <div class="shop__front">
-                <div class="shop__front__buy-buttons__wrapper">
-                    <div class="shop__front__buy-buttons" id="buy-buttons">
-                        <!-- <div class="shop__front__buy-buttons__button"></div> -->
-                    </div>
+            <div class="shop__content__wrapper shop__inventory__wrapper">
+                <div class="shop__content__wrapper__header shop__inventory__wrapper__header">
+                    <div class="shop__content__wrapper__header__title shop__inventory__wrapper__header__title">Inventory</div>
                 </div>
-                <div class="shop__front__value-overlay" id="valueOverlay">
-                    <div class="shop__front__value-overlay__dialog">
-                        <div class="shop__front__value-overlay__dialog__header">
-                            <div>Select ingredient value:</div>
-                            <div class="shop__front__value-overlay__dialog__header__close" id="valueOverlayClose">×</div>
+                <div class="shop__inventory-ingredients" id="inventory-ingredients"></div>
+            </div>
+            <div class="shop__content__wrapper shop__front__wrapper">
+                <div class="shop__content__wrapper__header shop__front__wrapper__header">
+                    <div class="shop__content__wrapper__header__title shop__front__wrapper__header__title">Shop</div>
+                </div>
+                <div class="shop__front">
+                    <div class="shop__front__buy-buttons__wrapper">
+                        <div class="shop__front__buy-buttons" id="buy-buttons">
+                            <!-- <div class="shop__front__buy-buttons__button"></div> -->
                         </div>
-                        <!-- <div class="shop__front__value-overlay__dialog__content"> -->
-                        <div class="shop__front__value-overlay__buttons" id="valueOverlayButtons"></div>
-                            <!-- <span class="shop__front__value-overlay__close" id="valueOverlayClose">&times;</span> -->
-                        <!-- </div> -->
+                    </div>
+                    <div class="shop__front__value-overlay" id="valueOverlay">
+                        <div class="shop__front__value-overlay__dialog">
+                            <div class="shop__front__value-overlay__dialog__header">
+                                <div>Select ingredient value:</div>
+                                <div class="shop__front__value-overlay__dialog__header__close" id="valueOverlayClose">×</div>
+                            </div>
+                            <!-- <div class="shop__front__value-overlay__dialog__content"> -->
+                            <div class="shop__front__value-overlay__buttons" id="valueOverlayButtons"></div>
+                                <!-- <span class="shop__front__value-overlay__close" id="valueOverlayClose">&times;</span> -->
+                            <!-- </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

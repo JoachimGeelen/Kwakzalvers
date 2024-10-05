@@ -553,7 +553,7 @@ function promptUserToSelectIngredientId(ingredientIds) {
 // Function to reset the bag (put all owned ingredients back into the bag)
 function resetBag() {
     player.resetBoard2();  // Reset the bag by putting all owned ingredients back
-    player.resetSideboard2();
+    // player.resetSideboard2();
     // player.resetBag();
     // player.resetSideboard();
     updateUI();  // Update the UI after resetting
@@ -618,6 +618,18 @@ function closeNewGameOverlay() {
     const newGameOverlay = document.getElementById('newGameOverlay');
     newGameOverlay.style.display = 'none';
 }
+function insertSideboardDiv() {
+    const sideBoardWrapper = document.getElementById('sideboardWrapper');
+    const bagWrapper = document.getElementById('bagWrapper');
+    bagWrapper.style.height = '70%';
+    sideBoardWrapper.style.display = 'flex';
+}
+function removeSideboardDiv() {
+    const sideBoardWrapper = document.getElementById('sideboardWrapper');
+    const bagWrapper = document.getElementById('bagWrapper');
+    bagWrapper.style.height = '100%';
+    sideBoardWrapper.style.display = 'none';
+}
 
 
 
@@ -645,13 +657,13 @@ function initUI() {
     const sideboardSettingElement = document.getElementById('settingsSideboardToggle');
     if  (sideboardSetting) {
         sideboardSettingElement.checked = true;
-        document.getElementById('sideboard').style.display = 'grid';
+        insertSideboardDiv();
     }
     else {
         sideboardSettingElement.checked = false;
-        document.getElementById('sideboard').style.display = 'none';
+        removeSideboardDiv();
     }
-
+    updateUI();
     // const multipleOverlayRange = document.getElementById('multipleOverlayRange');
     // multipleOverlayRange.value = drawMultipleCount;
     // const multipleOverlayNumber = document.getElementById("multipleOverlayNumber");
@@ -666,8 +678,9 @@ function setMultipleInputsLimits(max) {
 // Function to update the UI
 function updateUI() {
     // player.logSanityCheck();
-    insertBagIngredientList(document.getElementById('bag-ingredients'), player.bag);
-    setGridDivStyling(document.getElementById('bag-ingredients'), player.getBagIngredientCount());
+    // console.log("updateUI")
+    insertBagIngredientList(document.getElementById('bagIngredients'), player.bag);
+    setGridDivStyling(document.getElementById('bagIngredients'), player.getBagIngredientCount());
 
     
     insertInventoryIngredientList(document.getElementById('inventory-ingredients'), player.inventory);
@@ -676,12 +689,12 @@ function updateUI() {
     insertSideboardIngredientList(document.getElementById('sideboard'), player.sideboard);
     setGridDivStyling(document.getElementById('sideboard'), player.getSideboardIngredientCount());
     
-    insertBoardIngredientList(document.getElementById('board-history'), player.board); //same as below but different due to difference between board and bag/inventory
-    setBoardHistoryScrollAmount(document.getElementById('board-history'));
+    insertBoardIngredientList(document.getElementById('boardHistory'), player.board); //same as below but different due to difference between board and bag/inventory
+    setBoardHistoryScrollAmount(document.getElementById('boardHistory'));
 }
 
 
-function setGridDivStyling(gridDiv, itemCount, baseColumns = 4) {
+function setGridDivStyling(gridDiv, itemCount, baseColumns = 5) {
     const containerWidth = gridDiv.clientWidth;
     const containerHeight = gridDiv.clientHeight;
     if (!containerWidth || !containerHeight || !itemCount) return;
@@ -727,8 +740,8 @@ function insertBoardIngredientList(div, board) {
     board.forEach((ingredientId, boardId) => {
         const ingredientDiv = buildIngredientDiv(ingredientId);
         
-        ingredientDiv.style.height = `${historyHeight}px`;
-        ingredientDiv.style.width = `${historyHeight}px`;
+        ingredientDiv.style.height = `${historyHeight*0.9}px`;
+        ingredientDiv.style.width = `${historyHeight*0.9}px`;
         ingredientDiv.style.flex = 'none';
         ingredientDiv.addEventListener('click', function (event) {
             openRelocateOverlay(boardId);
@@ -852,6 +865,7 @@ function navActivateThisContent(contentDiv, navDiv) {
 }
 
 function navToCauldron() {
+    // console.log("nav to cauldron")
     navDeactivateAllContent();
     const cauldronDiv = document.getElementById('cauldron');
     const viewCauldronLink = document.getElementById('viewCauldron');
@@ -859,6 +873,7 @@ function navToCauldron() {
     updateUI();
 }
 function navToShop() {
+    // console.log("nav to shop")
     navDeactivateAllContent();
     const shopDiv = document.getElementById('shop');
     const viewShopLink = document.getElementById('viewShop');
@@ -866,6 +881,7 @@ function navToShop() {
     updateUI();
 }
 function navToSettings() {
+    // console.log("nav to settings")
     navDeactivateAllContent();
     const settingsDiv = document.getElementById('settings');
     const viewSettingsLink = document.getElementById('viewSettings');
@@ -1029,14 +1045,16 @@ function addSettingsListeners() {
     
     const sideboardToggle = document.getElementById('settingsSideboardToggle');
     sideboardToggle.addEventListener('change', function() {
-        const sideboardDiv = document.getElementById('sideboard');
+        const sideboardDiv = document.getElementById('sideboardWrapper');
         if (this.checked) {
             sideboardSetting = true;
-            sideboardDiv.style.display = 'grid';
+            // sideboardDiv.style.display = 'flex';
+            insertSideboardDiv();
         }
         else {
             sideboardSetting = false;
-            sideboardDiv.style.display = 'none';
+            removeSideboardDiv();
+            // sideboardDiv.style.display = 'none';
         }
     });
 
