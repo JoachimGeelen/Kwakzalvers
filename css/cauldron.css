@@ -7,12 +7,12 @@
 
 .cauldron__top {
     /* flex: 5; */
-    height: 70%;
+    height: 65%;
     position: relative;
 }
 
 .cauldron__bottom {
-    height: 30%;
+    height: 35%;
     position: relative;
     /* justify-content: flex-end; */
 }
@@ -36,13 +36,13 @@
     /* height: 100px; */
     /* max-height: 135px; */
     /* height: 100px; */
-    height: 75%;
+    height: 70%;
     background-color: #18322a;
 }
 .cauldron__draw-menu {
     /* flex: 0.5; */
     /* height: 45px; */
-    height: 25%;
+    height: 30%;
     background-color: #124066;
     display: flex;
     gap: 10px;
