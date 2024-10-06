@@ -20,11 +20,11 @@
 
 .shop__inventory__wrapper {
     /* flex: 1; */
-    height: 60%;
+    height: 55%;
     background-color: #433f21;
 }
 .shop__front__wrapper {
-    height: 40%;
+    height: 50%;
     background-color: #141413;
 }
 .shop__inventory__wrapper__header__title {
@@ -99,7 +99,7 @@
     flex-direction: column;
     width: 80%;
     padding: 10px;
-    background-color: #2c291f;
+    background-color: #2d2c2a;
 }
 .shop__front__value-overlay__dialog__header {
     display: flex;
@@ -115,19 +115,24 @@
 }
 .shop__front__value-overlay__buttons {
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
+    justify-content: center;
+    /* height: 50px; */
+    height: 85px;
     gap: 10px;
 }
 .shop__front__value-overlay__buttons__button {
     /* flex: 1; */
     display: flex;
-    width: 84px;
-    height: 70px;
+    /* width: 84px; */
+    /* height: 70px; */
     justify-content: center;
     align-items: center;
     /* text-align: center; */
     cursor: pointer;
     font-size: xx-large;
+    /* background-color: #53524f; */
+    /* filter: drop-shadow(2px 2px 2px var(--outline-color)); */
 }
 
 
@@ -139,7 +144,7 @@
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000000cc;
 }
 .shop__sellOverlay__dialog {
     display: flex;

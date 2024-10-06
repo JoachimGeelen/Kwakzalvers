@@ -431,13 +431,29 @@ function showValueButtons(colorId) {
     valueButtonsDiv.innerHTML = '';
     valuesByColorId.get(colorId).forEach(value => {
         const valueButton = document.createElement('div');
-        valueButton.textContent = value;
-        valueButton.onclick = () => {
-            buyIngredient(getIngredientId(colorId, value));
+        valueButton.classList.add("shop__front__value-overlay__buttons__button");
+        // valueButton.classList.add(`${ColorById.get(colorId)}-bg`, "shop__front__value-overlay__buttons__button");
+
+        const ingredientId = getIngredientId(colorId, value);
+        const ingredientDiv = buildIngredientDiv(ingredientId);
+        ingredientDiv.style.height = '100%';
+        ingredientDiv.style.aspectRatio = '1/1'
+        // ingredientDiv.style.width = '100%';
+        console.log(ingredientId);
+        console.log(ingredientDiv)
+        ingredientDiv.onclick = () => {
+            buyIngredient(ingredientId);
             closeValueOverlay();
         }
-        valueButton.classList.add(`${ColorById.get(colorId)}-bg`, "shop__front__value-overlay__buttons__button");
-        valueButtonsDiv.appendChild(valueButton);
+        // valueButton.appendChild(ingredientDiv);
+        valueButtonsDiv.appendChild(ingredientDiv);
+
+        // valueButton.textContent = value;
+        // valueButton.onclick = () => {
+        //     buyIngredient(getIngredientId(colorId, value));
+        // valueButton.classList.add(`${ColorById.get(colorId)}-bg`, "shop__front__value-overlay__buttons__button");
+        //     closeValueOverlay();
+        // }
     });
 }
 

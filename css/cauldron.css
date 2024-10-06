@@ -28,7 +28,7 @@
 .cauldron__sideboard__wrapper {
     height: 30%;
     /* flex: 1.5; */
-    background-color: #0d151b;
+    background-color: #1b172e;
     /* min-height: 100px; */
 }
 .cauldron__boardHistory__wrapper {
@@ -37,7 +37,7 @@
     /* max-height: 135px; */
     /* height: 100px; */
     height: 75%;
-    background-color: #1c3f34;
+    background-color: #18322a;
 }
 .cauldron__draw-menu {
     /* flex: 0.5; */
@@ -65,7 +65,7 @@
     background-color: #28405c;
 }
 .cauldron__sideboard__wrapper__header__title {
-    background-color: #131e28;
+    background-color: #2e2653;
 }
 /* .cauldron__boardHistory__wrapper__header__title {
     background-color: #2b6050;
@@ -84,7 +84,7 @@
 .cauldron__sideboard {
     flex: auto;
     display: grid;
-    background-color: #131e28;
+    background-color: #2e2653;
     overflow-y: hidden;
 }
 .ingredient {
@@ -153,6 +153,7 @@
         drop-shadow(var(--hw) var(--hwn) 0 var(--highlight-color)) 
         drop-shadow(var(--hwn) var(--hwn) 0 var(--highlight-color))
         drop-shadow(2px 2px 2px var(--outline-color));
+    /* box-shadow: 0px 0px 0px 10px var(--highlight-color); */
 }
 
 .cauldron__draw-menu__reset {
